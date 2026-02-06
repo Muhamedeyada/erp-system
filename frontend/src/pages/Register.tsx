@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { DarkModeToggle } from '../components/DarkModeToggle';
 
 function getErrorMessage(err: unknown): string {
   if (err && typeof err === 'object' && 'response' in err) {
@@ -59,16 +60,28 @@ export function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-erp-slate-50 dark:bg-erp-slate-900 px-4 py-8">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-erp-slate-900 dark:text-white tracking-tight">
+    <div className="min-h-screen relative flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gradient-to-br from-slate-50 via-slate-100 to-sky-50 dark:from-slate-900 dark:via-slate-800 dark:to-sky-950 px-4 py-8">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-80 h-80 rounded-full bg-sky-200/30 dark:bg-sky-500/10 blur-3xl" />
+        <div className="absolute top-1/3 -right-32 w-72 h-72 rounded-full bg-sky-100/50 dark:bg-sky-600/5 blur-3xl" />
+        <div className="absolute bottom-40 left-1/3 w-48 h-48 rounded-full bg-slate-200/40 dark:bg-slate-600/10 blur-2xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-transparent via-transparent to-sky-100/30 dark:to-sky-900/20" />
+      </div>
+
+      <div className="absolute top-4 right-4 z-10">
+        <DarkModeToggle />
+      </div>
+
+      <div className="relative w-full max-w-md">
+        <Link to="/" className="block text-center mb-6 sm:mb-8 group">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
             ERP System
           </h1>
-          <p className="mt-2 text-erp-slate-600 dark:text-erp-slate-400">Register your company</p>
-        </div>
+          <p className="mt-2 text-slate-600 dark:text-slate-400">Register your company</p>
+        </Link>
 
-        <div className="erp-card p-6 sm:p-8 shadow-erp-md">
+        <div className="erp-card p-6 sm:p-8 shadow-xl dark:shadow-slate-900/50 backdrop-blur-sm">
           {error && (
             <div className="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
               <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
@@ -77,7 +90,7 @@ export function Register() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="companyName" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
+              <label htmlFor="companyName" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 Company Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -100,7 +113,7 @@ export function Register() {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 Email <span className="text-red-500">*</span>
               </label>
               <input
@@ -124,7 +137,7 @@ export function Register() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 Password <span className="text-red-500">*</span>
               </label>
               <input
@@ -149,8 +162,8 @@ export function Register() {
             </div>
 
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
-                Your Name <span className="text-erp-slate-400 text-xs">(optional)</span>
+              <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                Your Name <span className="text-slate-400 text-xs">(optional)</span>
               </label>
               <input
                 id="name"
@@ -192,9 +205,9 @@ export function Register() {
               )}
             </button>
 
-            <p className="text-center text-sm text-erp-slate-600 dark:text-erp-slate-400">
+            <p className="text-center text-sm text-slate-600 dark:text-slate-400">
               Already have an account?{' '}
-              <Link to="/login" className="text-erp-primary-600 dark:text-erp-primary-400 hover:underline font-medium">
+              <Link to="/login" className="text-sky-600 dark:text-sky-400 hover:underline font-medium">
                 Sign in
               </Link>
             </p>

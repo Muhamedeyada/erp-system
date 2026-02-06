@@ -8,7 +8,7 @@ export function DarkModeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="p-2 rounded-lg hover:bg-erp-slate-100 dark:hover:bg-erp-slate-700 text-erp-slate-600 dark:text-erp-slate-400 transition-colors"
+      className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 transition-colors"
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >

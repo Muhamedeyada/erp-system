@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import {
   LayoutDashboard,
@@ -32,21 +32,29 @@ export function Layout({ children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-erp-slate-50 dark:bg-erp-slate-900 flex">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex">
       {/* Sidebar - responsive: drawer on mobile, static on lg+ */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 sm:w-72 bg-white dark:bg-erp-slate-800 border-r border-erp-slate-200 dark:border-erp-slate-700 transform transition-transform duration-200 ease-out lg:translate-x-0 ${
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 sm:w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform transition-transform duration-200 ease-out lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="flex flex-col h-full">
-          <div className="p-4 sm:p-5 border-b border-erp-slate-200 dark:border-erp-slate-700">
-            <h1 className="text-xl font-bold text-erp-slate-900 dark:text-white tracking-tight">
+          <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-700 space-y-1">
+            <Link
+              to="/"
+              onClick={() => setSidebarOpen(false)}
+              className="block text-xl font-bold text-slate-900 dark:text-white tracking-tight hover:text-sky-600 dark:hover:text-sky-400 transition-colors cursor-pointer"
+            >
               ERP System
-            </h1>
-            <p className="text-sm text-erp-slate-500 dark:text-erp-slate-400 truncate mt-0.5">
+            </Link>
+            <Link
+              to="/dashboard"
+              onClick={() => setSidebarOpen(false)}
+              className="block text-sm text-slate-500 dark:text-slate-400 truncate hover:text-sky-600 dark:hover:text-sky-400 transition-colors cursor-pointer"
+            >
               {user?.tenant?.name}
-            </p>
+            </Link>
           </div>
           <nav className="flex-1 p-3 sm:p-4 space-y-1 overflow-y-auto">
             {navItems.map(({ to, icon: Icon, label }) => (
@@ -57,8 +65,8 @@ export function Layout({ children }: LayoutProps) {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-sm font-medium ${
                     isActive
-                      ? 'bg-erp-primary-50 dark:bg-erp-primary-900/20 text-erp-primary-700 dark:text-erp-primary-300'
-                      : 'text-erp-slate-700 dark:text-erp-slate-300 hover:bg-erp-slate-100 dark:hover:bg-erp-slate-700/50'
+                      ? 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300'
+                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50'
                   }`
                 }
               >
@@ -71,22 +79,23 @@ export function Layout({ children }: LayoutProps) {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="sticky top-0 z-30 flex items-center justify-between h-14 sm:h-16 px-4 sm:px-6 bg-white dark:bg-erp-slate-800 border-b border-erp-slate-200 dark:border-erp-slate-700">
+        <header className="sticky top-0 z-30 flex items-center justify-between h-14 sm:h-16 px-4 sm:px-6 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 gap-4">
           <button
             onClick={() => setSidebarOpen((s) => !s)}
-            className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-erp-slate-100 dark:hover:bg-erp-slate-700 text-erp-slate-600 dark:text-erp-slate-400"
+            className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 shrink-0"
             aria-label={sidebarOpen ? 'Close menu' : 'Open menu'}
           >
             {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
-          <div className="flex-1 lg:flex-none" />
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex-1 min-w-0" />
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <DarkModeToggle />
-            <div className="hidden sm:block text-right">
-              <p className="text-sm font-medium text-erp-slate-900 dark:text-white truncate max-w-[140px]">
+            <div className="hidden sm:flex items-center gap-2">
+              <span className="text-sm font-medium text-slate-900 dark:text-white truncate max-w-[140px]">
                 {user?.name || user?.email}
-              </p>
-              <p className="text-xs text-erp-slate-500 dark:text-erp-slate-400">{user?.role}</p>
+              </span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">·</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 uppercase">{user?.role}</span>
             </div>
             <button
               onClick={logout}

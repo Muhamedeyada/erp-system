@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { DarkModeToggle } from '../components/DarkModeToggle';
 
 const DEMO_EMAIL = 'demo@demo.com';
 const DEMO_PASSWORD = 'demo123';
@@ -60,16 +61,28 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-erp-slate-50 dark:bg-erp-slate-900 px-4 py-8">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-erp-slate-900 dark:text-white tracking-tight">
+    <div className="min-h-screen relative flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gradient-to-br from-slate-50 via-slate-100 to-sky-50 dark:from-slate-900 dark:via-slate-800 dark:to-sky-950 px-4 py-8">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-sky-200/30 dark:bg-sky-500/10 blur-3xl" />
+        <div className="absolute top-1/2 -left-40 w-72 h-72 rounded-full bg-sky-100/50 dark:bg-sky-600/5 blur-3xl" />
+        <div className="absolute bottom-20 right-1/4 w-48 h-48 rounded-full bg-slate-200/40 dark:bg-slate-600/10 blur-2xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-transparent via-transparent to-sky-100/30 dark:to-sky-900/20" />
+      </div>
+
+      <div className="absolute top-4 right-4 z-10">
+        <DarkModeToggle />
+      </div>
+
+      <div className="relative w-full max-w-md">
+        <Link to="/" className="block text-center mb-6 sm:mb-8 group">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
             ERP System
           </h1>
-          <p className="mt-2 text-erp-slate-600 dark:text-erp-slate-400">Sign in to your account</p>
-        </div>
+          <p className="mt-2 text-slate-600 dark:text-slate-400">Sign in to your account</p>
+        </Link>
 
-        <div className="erp-card p-6 sm:p-8 shadow-erp-md">
+        <div className="erp-card p-6 sm:p-8 shadow-xl dark:shadow-slate-900/50 backdrop-blur-sm">
           {error && (
             <div className="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
               <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
@@ -79,15 +92,15 @@ export function Login() {
           <button
             type="button"
             onClick={handleDemoClick}
-            className="w-full mb-6 py-2.5 px-4 rounded-lg bg-erp-slate-100 dark:bg-erp-slate-700 hover:bg-erp-slate-200 dark:hover:bg-erp-slate-600 text-erp-slate-700 dark:text-erp-slate-300 font-medium transition-colors text-sm"
+            className="w-full mb-6 py-2.5 px-4 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 font-medium transition-colors text-sm"
           >
             Use Demo Account
           </button>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
-                Email
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                Email <span className="text-red-500">*</span>
               </label>
               <input
                 id="email"
@@ -110,8 +123,8 @@ export function Login() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
-                Password
+              <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                Password <span className="text-red-500">*</span>
               </label>
               <input
                 id="password"
@@ -163,9 +176,9 @@ export function Login() {
               )}
             </button>
 
-            <p className="text-center text-sm text-erp-slate-600 dark:text-erp-slate-400">
+            <p className="text-center text-sm text-slate-600 dark:text-slate-400">
               Don&apos;t have an account?{' '}
-              <Link to="/register" className="text-erp-primary-600 dark:text-erp-primary-400 hover:underline font-medium">
+              <Link to="/register" className="text-sky-600 dark:text-sky-400 hover:underline font-medium">
                 Register company
               </Link>
             </p>
