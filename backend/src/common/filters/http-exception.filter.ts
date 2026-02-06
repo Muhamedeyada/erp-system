@@ -22,7 +22,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const resp = exceptionResponse as { message?: string | string[]; errors?: string[] };
     let message: string | string[] = resp?.message ?? exception.message;
     const errors = resp?.errors ?? (Array.isArray(message) ? message : undefined);
-    const messageStr = Array.isArray(message) ? 'Validation failed' : (message as string);
+    const messageStr =
+      errors?.length > 0
+        ? errors.join('. ')
+        : Array.isArray(message)
+          ? (message as string[]).join('. ')
+          : (message as string);
 
     const body = {
       success: false,

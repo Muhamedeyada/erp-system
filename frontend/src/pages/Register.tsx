@@ -3,13 +3,13 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { DarkModeToggle } from '../components/DarkModeToggle';
 
-function getErrorMessage(err: unknown): string {
+function getErrorFromResponse(err: unknown): { message: string; errors?: string[] } {
   if (err && typeof err === 'object' && 'response' in err) {
     const res = (err as { response?: { data?: { message?: string; errors?: string[] } } }).response?.data;
-    if (res?.errors?.length) return res.errors.join('. ');
-    if (res?.message) return res.message;
+    const message = res?.errors?.length ? res.errors.join('. ') : res?.message ?? 'Registration failed';
+    return { message, errors: res?.errors };
   }
-  return 'Registration failed';
+  return { message: 'Registration failed' };
 }
 
 export function Register() {
@@ -27,7 +27,7 @@ export function Register() {
     const errors: Record<string, string> = {};
     if (!companyName.trim()) errors.companyName = 'Company name is required';
     if (!email.trim()) errors.email = 'Email is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = 'Invalid email format';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || /\.\.+/.test(email)) errors.email = 'Please enter a valid email address';
     if (!password) errors.password = 'Password is required';
     else if (password.length < 6) errors.password = 'Password must be at least 6 characters';
     setFieldErrors(errors);
@@ -45,7 +45,17 @@ export function Register() {
       await registerCompany({ companyName, email, password, name: name || undefined });
       navigate('/dashboard', { replace: true });
     } catch (err) {
-      setError(getErrorMessage(err));
+      const { message, errors } = getErrorFromResponse(err);
+      setError(message);
+      if (errors?.length) {
+        const byField: Record<string, string> = {};
+        errors.forEach((msg) => {
+          if (/email|e-mail/i.test(msg)) byField.email = msg;
+          else if (/password/i.test(msg)) byField.password = msg;
+          else if (/company|name/i.test(msg)) byField.companyName = msg;
+        });
+        if (Object.keys(byField).length > 0) setFieldErrors(byField);
+      }
     } finally {
       setLoading(false);
     }

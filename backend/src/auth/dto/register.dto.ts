@@ -6,7 +6,7 @@ export class RegisterCompanyDto {
   companyName!: string;
 
   @IsNotEmpty()
-  @IsEmail()
+  @IsEmail({}, { message: 'Please enter a valid email address' })
   email!: string;
 
   @IsNotEmpty()
