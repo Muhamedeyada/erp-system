@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { BarChart3, Download, Play } from 'lucide-react';
 import { reportsApi } from '../../../services/api';
+import { EmptyState } from '../../../components/EmptyState';
+import { TableSkeleton } from '../../../components/Skeleton';
 import type { AccountType } from '../../../types';
 
 interface TrialBalanceAccountRow {
@@ -148,7 +150,13 @@ export function TrialBalance() {
         </div>
       )}
 
-      {data && (
+      {loading && (
+        <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
+          <TableSkeleton rows={10} cols={4} />
+        </div>
+      )}
+
+      {data && !loading && (
         <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
           <div className="erp-table-wrapper">
             <table className="w-full text-sm">
@@ -163,8 +171,12 @@ export function TrialBalance() {
               <tbody>
                 {data.accounts.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="py-8 text-center text-erp-slate-500 dark:text-erp-slate-400">
-                      No data for the selected date range.
+                    <td colSpan={4} className="p-0">
+                      <EmptyState
+                        icon={BarChart3}
+                        title="No data for this period"
+                        description="There are no account balances in the selected date range. Try a different range or add journal entries."
+                      />
                     </td>
                   </tr>
                 ) : groupByType ? (
@@ -250,9 +262,11 @@ export function TrialBalance() {
       )}
 
       {!data && !loading && (
-        <p className="text-erp-slate-500 dark:text-erp-slate-400">
-          Select a date range and click Run to generate the trial balance.
-        </p>
+        <EmptyState
+          icon={BarChart3}
+          title="No report generated yet"
+          description="Select a date range and click Run to generate the trial balance."
+        />
       )}
     </div>
   );

@@ -4,6 +4,8 @@ import { Plus, BookOpen } from 'lucide-react';
 import { accountsApi } from '../../services/api';
 import { AccountTreeItem } from '../../components/accounting/AccountTreeItem';
 import { AccountForm } from '../../components/accounting/AccountForm';
+import { EmptyState } from '../../components/EmptyState';
+import { Skeleton } from '../../components/Skeleton';
 import type { Account } from '../../types';
 
 const ACCOUNT_TYPES = ['', 'ASSET', 'LIABILITY', 'EQUITY', 'REVENUE', 'EXPENSE'] as const;
@@ -107,11 +109,21 @@ export function ChartOfAccounts() {
 
       <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
         {isLoading ? (
-          <div className="p-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
-        ) : Array.isArray(accounts) && accounts.length === 0 ? (
-          <div className="p-12 text-center text-erp-slate-500 dark:text-erp-slate-400">
-            No accounts found. Add your first account to get started.
+          <div className="p-6 space-y-4">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="flex items-center gap-3">
+                <Skeleton className="h-5 w-5 rounded" />
+                <Skeleton className="h-5 flex-1 max-w-[200px]" />
+                <Skeleton className="h-5 w-16 rounded" />
+              </div>
+            ))}
           </div>
+        ) : Array.isArray(accounts) && accounts.length === 0 ? (
+          <EmptyState
+            icon={BookOpen}
+            title="No accounts yet"
+            description="Add your first account to build your chart of accounts."
+          />
         ) : (
           <div className="divide-y divide-erp-slate-200 dark:divide-erp-slate-700">
             {Array.isArray(accounts) &&

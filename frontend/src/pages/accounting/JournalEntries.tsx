@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Plus, Eye, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { journalEntriesApi, accountsApi } from '../../services/api';
 import { JournalEntryForm } from '../../components/accounting/JournalEntryForm';
+import { EmptyState } from '../../components/EmptyState';
+import { TableSkeleton } from '../../components/Skeleton';
 import type { JournalEntry, Account } from '../../types';
 
 const LIMIT = 10;
@@ -84,7 +86,9 @@ export function JournalEntries() {
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
+        <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
+          <TableSkeleton rows={8} cols={5} />
+        </div>
       ) : (
         <>
           <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
@@ -102,8 +106,12 @@ export function JournalEntries() {
                 <tbody>
                   {entries.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="py-8 text-center text-erp-slate-500 dark:text-erp-slate-400">
-                        No journal entries yet. Create one to get started.
+                      <td colSpan={5} className="p-0">
+                        <EmptyState
+                          icon={FileText}
+                          title="No journal entries yet"
+                          description="Create your first journal entry to record transactions."
+                        />
                       </td>
                     </tr>
                   ) : (

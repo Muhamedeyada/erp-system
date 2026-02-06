@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Plus, CreditCard } from 'lucide-react';
 import { paymentsApi, invoicesApi } from '../../services/api';
 import { PaymentForm } from '../../components/accounting/PaymentForm';
+import { EmptyState } from '../../components/EmptyState';
+import { TableSkeleton } from '../../components/Skeleton';
 import type { Payment, Invoice } from '../../types';
 import type { PaymentMethod } from '../../types';
 
@@ -103,7 +105,9 @@ export function Payments() {
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
+        <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
+          <TableSkeleton rows={8} cols={5} />
+        </div>
       ) : (
         <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
           <div className="erp-table-wrapper">
@@ -120,8 +124,12 @@ export function Payments() {
               <tbody>
                 {payments.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-8 text-center text-erp-slate-500 dark:text-erp-slate-400">
-                      No payments found.
+                    <td colSpan={5} className="p-0">
+                      <EmptyState
+                        icon={CreditCard}
+                        title="No payments yet"
+                        description="Record a payment against an invoice to see it here."
+                      />
                     </td>
                   </tr>
                 ) : (

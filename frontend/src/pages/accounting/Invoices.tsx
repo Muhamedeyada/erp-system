@@ -3,6 +3,8 @@ import { Plus, Receipt, Filter, ChevronLeft, ChevronRight, Calendar, Eye } from 
 import { invoicesApi } from '../../services/api';
 import { InvoiceForm } from '../../components/accounting/InvoiceForm';
 import { InvoiceDetails } from '../../components/accounting/InvoiceDetails';
+import { EmptyState } from '../../components/EmptyState';
+import { TableSkeleton } from '../../components/Skeleton';
 import type { Invoice } from '../../types';
 import type { InvoiceStatus } from '../../types';
 
@@ -157,9 +159,8 @@ export function Invoices() {
       </div>
 
       {loading ? (
-        <div className="erp-card py-16 flex flex-col items-center justify-center gap-3">
-          <div className="animate-spin rounded-full h-10 w-10 border-2 border-sky-500 border-t-transparent" />
-          <p className="text-slate-500 dark:text-slate-400">Loading invoices...</p>
+        <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
+          <TableSkeleton rows={8} cols={6} />
         </div>
       ) : (
         <>
@@ -179,10 +180,12 @@ export function Invoices() {
                 <tbody>
                   {invoices.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="py-16 text-center">
-                        <Receipt className="w-12 h-12 mx-auto mb-3 text-slate-300 dark:text-slate-600" />
-                        <p className="text-slate-500 dark:text-slate-400">No invoices found</p>
-                        <p className="text-sm text-slate-400 dark:text-slate-500 mt-1">Create your first invoice to get started</p>
+                      <td colSpan={6} className="p-0">
+                        <EmptyState
+                          icon={Receipt}
+                          title="No invoices yet"
+                          description="Create your first invoice to get started."
+                        />
                       </td>
                     </tr>
                   ) : (
