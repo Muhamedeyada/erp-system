@@ -22,12 +22,8 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new TransformInterceptor());
 
-  // No trailing slash so CORS origin matches browser exactly
-  const frontendOrigin = (process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/+$/, '');
-  app.enableCors({
-    origin: frontendOrigin,
-    credentials: true,
-  });
+  const origin = (process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/+$/, '');
+  app.enableCors({ origin, credentials: true });
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
