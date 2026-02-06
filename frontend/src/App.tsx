@@ -10,7 +10,7 @@ import { ChartOfAccounts } from './pages/accounting/ChartOfAccounts';
 import { JournalEntries } from './pages/accounting/JournalEntries';
 import { Invoices } from './pages/accounting/Invoices';
 import { Payments } from './pages/accounting/Payments';
-import { TrialBalancePage } from './pages/TrialBalancePage';
+import { TrialBalance } from './pages/accounting/reports/TrialBalance';
 
 function App() {
   return (
@@ -75,7 +75,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <TrialBalancePage />
+                  <TrialBalance />
                 </Layout>
               </ProtectedRoute>
             }
