@@ -95,7 +95,7 @@ export function ChartOfAccounts() {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="erp-input py-2 max-w-[180px] sm:max-w-none"
+            className="erp-select py-2 max-w-[180px] sm:max-w-none"
           >
             <option value="">All Types</option>
             {ACCOUNT_TYPES.filter(Boolean).map((t) => (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Receipt, Filter } from 'lucide-react';
+import { Plus, Receipt, Filter, ChevronLeft, ChevronRight, Calendar, Eye } from 'lucide-react';
 import { invoicesApi } from '../../services/api';
 import { InvoiceForm } from '../../components/accounting/InvoiceForm';
 import { InvoiceDetails } from '../../components/accounting/InvoiceDetails';
@@ -18,15 +18,15 @@ const STATUS_OPTIONS: { value: '' | InvoiceStatus; label: string }[] = [
 
 function StatusBadge({ status }: { status: InvoiceStatus }) {
   const styles: Record<InvoiceStatus, string> = {
-    PAID: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400',
-    PARTIALLY_PAID: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400',
-    SENT: 'bg-erp-primary-100 text-erp-primary-800 dark:bg-erp-primary-900/30 dark:text-erp-primary-400',
-    OVERDUE: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
-    DRAFT: 'bg-erp-slate-100 text-erp-slate-800 dark:bg-erp-slate-700 dark:text-erp-slate-300',
-    CANCELLED: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 line-through',
+    PAID: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-400 ring-1 ring-emerald-200/50 dark:ring-emerald-700/50',
+    PARTIALLY_PAID: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-400 ring-1 ring-amber-200/50 dark:ring-amber-700/50',
+    SENT: 'bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-400 ring-1 ring-sky-200/50 dark:ring-sky-700/50',
+    OVERDUE: 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-400 ring-1 ring-red-200/50 dark:ring-red-700/50',
+    DRAFT: 'bg-slate-100 text-slate-700 dark:bg-slate-700/60 dark:text-slate-300 ring-1 ring-slate-200/50 dark:ring-slate-600/50',
+    CANCELLED: 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-400 line-through ring-1 ring-red-200/50 dark:ring-red-700/50',
   };
   return (
-    <span className={`px-2 py-0.5 rounded text-xs font-medium ${styles[status] ?? 'bg-gray-100'}`}>
+    <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold ${styles[status] ?? 'bg-gray-100'}`}>
       {status.replace(/_/g, ' ')}
     </span>
   );
@@ -106,7 +106,7 @@ export function Invoices() {
           <div className="p-2.5 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 shadow-sm">
             <Receipt className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-white tracking-tight">Invoices</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Invoices</h1>
         </div>
         <button
           onClick={() => setShowForm(true)}
@@ -116,79 +116,101 @@ export function Invoices() {
         </button>
       </div>
 
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value as '' | InvoiceStatus)}
-          className="erp-input py-2 text-sm max-w-[140px] sm:max-w-none"
-        >
-          {STATUS_OPTIONS.map((o) => (
-            <option key={o.value || 'all'} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          placeholder="From"
-          className="erp-input py-2 text-sm"
-        />
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          placeholder="To"
-          className="erp-input py-2 text-sm"
-        />
-        <button onClick={handleFilter} className="erp-btn-secondary">
-          <Filter className="w-4 h-4" /> Filter
-        </button>
+      <div className="mb-6 erp-card p-4 sm:p-5">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2">
+            <Filter className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0" />
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value as '' | InvoiceStatus)}
+              className="erp-select py-2 text-sm max-w-[160px] sm:max-w-none"
+            >
+              {STATUS_OPTIONS.map((o) => (
+                <option key={o.value || 'all'} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0" />
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              placeholder="From"
+              className="erp-input py-2 text-sm"
+            />
+            <span className="text-slate-400 dark:text-slate-500">–</span>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              placeholder="To"
+              className="erp-input py-2 text-sm"
+            />
+          </div>
+          <button onClick={handleFilter} className="erp-btn-secondary">
+            <Filter className="w-4 h-4" /> Apply
+          </button>
+        </div>
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
+        <div className="erp-card py-16 flex flex-col items-center justify-center gap-3">
+          <div className="animate-spin rounded-full h-10 w-10 border-2 border-sky-500 border-t-transparent" />
+          <p className="text-slate-500 dark:text-slate-400">Loading invoices...</p>
+        </div>
       ) : (
         <>
           <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
             <div className="erp-table-wrapper">
               <table className="w-full text-sm">
-                <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">
-                  <tr>
-                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">#</th>
-                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Customer</th>
-                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Date</th>
-                    <th className="text-right py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Amount</th>
-                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Status</th>
+                <thead>
+                  <tr className="bg-slate-50 dark:bg-slate-700/60">
+                    <th className="text-left py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-300">#</th>
+                    <th className="text-left py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-300">Customer</th>
+                    <th className="text-left py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-300">Date</th>
+                    <th className="text-right py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-300">Amount</th>
+                    <th className="text-left py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-300">Status</th>
+                    <th className="w-12 py-3.5 px-2" />
                   </tr>
                 </thead>
                 <tbody>
                   {invoices.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="py-8 text-center text-erp-slate-500 dark:text-erp-slate-400">
-                        No invoices found.
+                      <td colSpan={6} className="py-16 text-center">
+                        <Receipt className="w-12 h-12 mx-auto mb-3 text-slate-300 dark:text-slate-600" />
+                        <p className="text-slate-500 dark:text-slate-400">No invoices found</p>
+                        <p className="text-sm text-slate-400 dark:text-slate-500 mt-1">Create your first invoice to get started</p>
                       </td>
                     </tr>
                   ) : (
-                    invoices.map((inv) => (
+                    invoices.map((inv, idx) => (
                       <tr
                         key={inv.id}
                         onClick={() => fetchInvoiceForView(inv.id)}
-                        className="border-t border-erp-slate-200 dark:border-erp-slate-600 hover:bg-erp-slate-50 dark:hover:bg-erp-slate-700/50 cursor-pointer transition-colors"
+                        className={`border-t border-slate-200 dark:border-slate-600 hover:bg-sky-50/50 dark:hover:bg-sky-900/10 cursor-pointer transition-colors group ${
+                          idx % 2 === 1 ? 'bg-slate-50/30 dark:bg-slate-800/20' : ''
+                        }`}
                       >
-                        <td className="py-3 px-4 font-mono text-erp-slate-900 dark:text-erp-slate-100 font-medium">
+                        <td className="py-3.5 px-4 font-mono font-semibold text-slate-900 dark:text-slate-100">
                           {inv.invoiceNumber}
                         </td>
-                        <td className="py-3 px-4 text-erp-slate-700 dark:text-erp-slate-300">{inv.customerName}</td>
-                        <td className="py-3 px-4 text-erp-slate-700 dark:text-erp-slate-300">
+                        <td className="py-3.5 px-4 text-slate-700 dark:text-slate-300">{inv.customerName}</td>
+                        <td className="py-3.5 px-4 text-slate-600 dark:text-slate-400">
                           {inv.date ? new Date(inv.date).toLocaleDateString() : '-'}
                         </td>
-                        <td className="py-3 px-4 text-right font-mono text-erp-slate-900 dark:text-erp-slate-100">
+                        <td className="py-3.5 px-4 text-right font-mono font-medium text-slate-900 dark:text-slate-100">
                           {Number(inv.total).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                         </td>
-                        <td className="py-3 px-4">
+                        <td className="py-3.5 px-4">
                           <StatusBadge status={inv.status} />
+                        </td>
+                        <td className="py-3.5 px-2">
+                          <span className="inline-flex p-1.5 rounded-lg text-slate-400 group-hover:text-sky-600 dark:group-hover:text-sky-400 group-hover:bg-sky-100 dark:group-hover:bg-sky-900/30 transition-colors">
+                            <Eye className="w-4 h-4" />
+                          </span>
                         </td>
                       </tr>
                     ))
@@ -199,24 +221,24 @@ export function Invoices() {
           </div>
 
           {totalPages > 1 && (
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-4">
-              <span className="text-sm text-erp-slate-600 dark:text-erp-slate-400">
-                Page {page} of {totalPages} ({total} total)
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-5">
+              <span className="text-sm text-slate-600 dark:text-slate-400">
+                Page {page} of {totalPages} <span className="text-slate-400 dark:text-slate-500">({total} invoices)</span>
               </span>
               <div className="flex gap-2">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page <= 1}
-                  className="erp-btn-secondary py-1.5 px-3 text-sm disabled:opacity-50"
+                  className="erp-btn-secondary py-2 px-4 text-sm disabled:opacity-50 inline-flex items-center gap-2"
                 >
-                  Previous
+                  <ChevronLeft className="w-4 h-4" /> Previous
                 </button>
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page >= totalPages}
-                  className="erp-btn-secondary py-1.5 px-3 text-sm disabled:opacity-50"
+                  className="erp-btn-secondary py-2 px-4 text-sm disabled:opacity-50 inline-flex items-center gap-2"
                 >
-                  Next
+                  Next <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>

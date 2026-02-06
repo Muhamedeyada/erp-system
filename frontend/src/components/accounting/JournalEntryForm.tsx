@@ -185,7 +185,7 @@ export function JournalEntryForm({ accounts, onClose, onSubmit }: JournalEntryFo
                           value={line.accountId}
                           onChange={(e) => updateLine(i, 'accountId', e.target.value)}
                           required
-                          className="w-full py-1.5 px-2 erp-input text-sm py-1.5 px-2"
+                          className="erp-select w-full py-1.5 px-2 text-sm"
                         >
                           <option value="">Select account</option>
                           {flatAccounts.map((a) => (

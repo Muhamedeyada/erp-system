@@ -64,10 +64,10 @@ export function Login() {
     <div className="min-h-screen relative flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gradient-to-br from-slate-100 via-sky-100 to-sky-50 dark:from-slate-900 dark:via-slate-800 dark:to-sky-950 px-4 py-8">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-sky-200/30 dark:bg-sky-500/10 blur-3xl" />
-        <div className="absolute top-1/2 -left-40 w-72 h-72 rounded-full bg-sky-100/50 dark:bg-sky-600/5 blur-3xl" />
-        <div className="absolute bottom-20 right-1/4 w-48 h-48 rounded-full bg-slate-200/40 dark:bg-slate-600/10 blur-2xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-transparent via-transparent to-sky-100/30 dark:to-sky-900/20" />
+        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-sky-300/50 dark:bg-sky-500/20 blur-3xl" />
+        <div className="absolute top-1/2 -left-40 w-72 h-72 rounded-full bg-sky-200/60 dark:bg-sky-600/15 blur-3xl" />
+        <div className="absolute bottom-20 right-1/4 w-48 h-48 rounded-full bg-slate-300/50 dark:bg-slate-600/20 blur-2xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-transparent via-transparent to-sky-200/50 dark:to-sky-900/30" />
       </div>
 
       <div className="absolute top-4 right-4 z-10">

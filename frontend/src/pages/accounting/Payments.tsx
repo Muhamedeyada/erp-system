@@ -80,7 +80,7 @@ export function Payments() {
         <select
           value={filterInvoiceId}
           onChange={(e) => setFilterInvoiceId(e.target.value)}
-          className="erp-input py-2 text-sm max-w-[200px] sm:max-w-none"
+          className="erp-select py-2 text-sm max-w-[200px] sm:max-w-none"
         >
           <option value="">All invoices</option>
           {invoices.map((inv) => (
@@ -92,7 +92,7 @@ export function Payments() {
         <select
           value={filterMethod}
           onChange={(e) => setFilterMethod(e.target.value as '' | PaymentMethod)}
-          className="erp-input py-2 text-sm max-w-[140px] sm:max-w-none"
+          className="erp-select py-2 text-sm max-w-[140px] sm:max-w-none"
         >
           {METHOD_OPTIONS.map((o) => (
             <option key={o.value || 'all'} value={o.value}>

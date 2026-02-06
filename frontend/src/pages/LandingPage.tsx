@@ -25,7 +25,6 @@ import {
   ResponsiveContainer,
   Pie,
   Cell,
-  Legend,
 } from 'recharts';
 
 /* Static data for landing page previews */
@@ -284,43 +283,70 @@ export function LandingPage() {
                 </div>
               </div>
 
-              <div className="erp-card p-4 sm:p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/40">
-                    <PieChart className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="erp-card p-4 sm:p-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 dark:bg-emerald-400/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-sky-500/5 dark:bg-sky-400/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+                <div className="relative">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="p-2.5 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 shadow-sm ring-1 ring-emerald-200/50 dark:ring-emerald-700/30">
+                      <PieChart className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                        Invoice Status
+                      </h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Track payment progress at a glance</p>
+                    </div>
                   </div>
-                  <h3 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white">
-                    Invoice Status
-                  </h3>
-                </div>
-                <div className="h-56 sm:h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={SAMPLE_INVOICE_STATUS}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={50}
-                        outerRadius={70}
-                        paddingAngle={2}
-                        dataKey="value"
-                        nameKey="name"
-                      >
-                        {SAMPLE_INVOICE_STATUS.map((entry, i) => (
-                          <Cell key={i} fill={entry.fill} />
-                        ))}
-                      </Pie>
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: chartTheme.tooltipBg,
-                          border: `1px solid ${chartTheme.tooltipBorder}`,
-                          borderRadius: '0.5rem',
-                          color: chartTheme.tooltipColor,
+                  <div className="h-48 sm:h-56 flex items-center">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={SAMPLE_INVOICE_STATUS}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={44}
+                          outerRadius={62}
+                          paddingAngle={3}
+                          dataKey="value"
+                          nameKey="name"
+                          strokeWidth={2}
+                          stroke="rgba(255,255,255,0.9)"
+                        >
+                          {SAMPLE_INVOICE_STATUS.map((entry, i) => (
+                            <Cell key={i} fill={entry.fill} stroke={isDark ? 'rgba(30,41,59,0.5)' : 'rgba(255,255,255,0.9)'} strokeWidth={1.5} />
+                          ))}
+                        </Pie>
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: chartTheme.tooltipBg,
+                            border: `1px solid ${chartTheme.tooltipBorder}`,
+                            borderRadius: '0.75rem',
+                            color: chartTheme.tooltipColor,
+                            boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.1)',
+                          }}
+                          formatter={(value: number) => [`${value} invoices`, '']}
+                          itemStyle={{ fontWeight: 600 }}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-slate-200 dark:border-slate-600">
+                    {SAMPLE_INVOICE_STATUS.map((entry, i) => (
+                      <div
+                        key={i}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium"
+                        style={{
+                          backgroundColor: `${entry.fill}20`,
+                          color: entry.fill,
+                          border: `1px solid ${entry.fill}40`,
                         }}
-                      />
-                      <Legend wrapperStyle={{ color: chartTheme.tooltipColor }} />
-                    </PieChart>
-                  </ResponsiveContainer>
+                      >
+                        <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: entry.fill }} />
+                        {entry.name.replace(/_/g, ' ')} ({entry.value})
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

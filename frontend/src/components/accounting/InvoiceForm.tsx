@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Receipt, Calendar, User, FileText } from 'lucide-react';
 
 interface InvoiceLine {
   description: string;
@@ -94,80 +94,96 @@ export function InvoiceForm({ onClose, onSubmit }: InvoiceFormProps) {
         className="erp-card shadow-erp-lg dark:shadow-erp-dark-lg w-full max-w-2xl my-8"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 border-b border-erp-slate-200 dark:border-erp-slate-700">
-          <h2 className="text-lg font-semibold text-erp-slate-900 dark:text-erp-slate-100">Create Invoice</h2>
+        <div className="p-6 border-b border-slate-200 dark:border-slate-700">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-emerald-100 dark:bg-emerald-900/40">
+              <Receipt className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Create Invoice</h2>
+          </div>
         </div>
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {error && (
-            <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm">
+            <div className="p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm">
               {error}
             </div>
           )}
 
-          <div>
-            <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">
-              Customer Name *
-            </label>
-            <input
-              type="text"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              required
-              placeholder="ABC Company"
-              className="w-full px-4 py-2 erp-input"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">
-              Customer ID (optional)
-            </label>
-            <input
-              type="text"
-              value={customerId}
-              onChange={(e) => setCustomerId(e.target.value.replace(/\D/g, ''))}
-              placeholder="123"
-              className="w-full px-4 py-2 erp-input"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 space-y-4">
+            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+              <User className="w-4 h-4" /> Customer
+            </h3>
             <div>
-              <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">Date *</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Customer Name *
+              </label>
               <input
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                type="text"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
                 required
-                className="w-full px-4 py-2 erp-input"
+                placeholder="ABC Company"
+                className="w-full px-4 py-2.5 erp-input rounded-lg"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">Due Date *</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Customer ID (optional)
+              </label>
               <input
-                type="date"
-                value={due}
-                onChange={(e) => setDue(e.target.value)}
-                required
-                className="w-full px-4 py-2 erp-input"
+                type="text"
+                value={customerId}
+                onChange={(e) => setCustomerId(e.target.value.replace(/\D/g, ''))}
+                placeholder="123"
+                className="w-full px-4 py-2.5 erp-input rounded-lg"
               />
             </div>
           </div>
 
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2 mb-4">
+              <Calendar className="w-4 h-4" /> Dates
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Date *</label>
+                <input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                  className="w-full px-4 py-2.5 erp-input rounded-lg"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Due Date *</label>
+                <input
+                  type="date"
+                  value={due}
+                  onChange={(e) => setDue(e.target.value)}
+                  required
+                  className="w-full px-4 py-2.5 erp-input rounded-lg"
+                />
+              </div>
+            </div>
+          </div>
+
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300">Line Items</label>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <FileText className="w-4 h-4" /> Line Items
+              </h3>
               <button
                 type="button"
                 onClick={addLine}
-                className="flex items-center gap-1 text-sm text-erp-primary-600 dark:text-erp-primary-400 hover:underline"
+                className="flex items-center gap-1.5 text-sm text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 font-medium"
               >
-                <Plus className="w-4 h-4" /> Add
+                <Plus className="w-4 h-4" /> Add Line
               </button>
             </div>
-            <div className="border border-erp-slate-200 dark:border-erp-slate-600 rounded-lg overflow-hidden">
+            <div className="border border-slate-200 dark:border-slate-600 rounded-xl overflow-hidden shadow-sm">
               <table className="w-full text-sm">
-                <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">
+                <thead className="bg-slate-100 dark:bg-slate-700/50">
                   <tr>
                     <th className="text-left py-2 px-3 font-medium text-erp-slate-700 dark:text-erp-slate-300">Description</th>
                     <th className="text-right py-2 px-3 font-medium text-erp-slate-700 dark:text-erp-slate-300 w-24">Qty</th>
@@ -182,7 +198,7 @@ export function InvoiceForm({ onClose, onSubmit }: InvoiceFormProps) {
                     const up = Number(line.unitPrice) || 0;
                     const lineTotal = qty * up;
                     return (
-                      <tr key={i} className="border-t border-erp-slate-200 dark:border-erp-slate-600">
+                      <tr key={i} className="border-t border-slate-200 dark:border-slate-600">
                         <td className="py-1 px-3">
                           <input
                             type="text"
@@ -213,7 +229,7 @@ export function InvoiceForm({ onClose, onSubmit }: InvoiceFormProps) {
                             className="w-full py-1.5 px-2 erp-input text-sm py-1.5 px-2 text-right"
                           />
                         </td>
-                        <td className="py-1 px-3 text-right font-mono text-erp-slate-700 dark:text-erp-slate-300">
+                        <td className="py-2 px-4 text-right font-mono text-slate-700 dark:text-slate-300">
                           {lineTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                         </td>
                         <td>
@@ -234,28 +250,28 @@ export function InvoiceForm({ onClose, onSubmit }: InvoiceFormProps) {
             </div>
           </div>
 
-          <div className="py-3 px-4 rounded-lg bg-erp-slate-50 dark:bg-erp-slate-700/50 space-y-1 text-sm">
+          <div className="py-4 px-5 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800/60 dark:to-slate-800/30 border border-slate-200 dark:border-slate-600 space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-erp-slate-600 dark:text-erp-slate-400">Subtotal</span>
-              <span className="font-mono text-erp-slate-900 dark:text-erp-slate-100">
+              <span className="text-slate-600 dark:text-slate-400">Subtotal</span>
+              <span className="font-mono font-medium text-slate-900 dark:text-slate-100">
                 {subtotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-erp-slate-600 dark:text-erp-slate-400">Tax</span>
-              <span className="font-mono text-erp-slate-900 dark:text-erp-slate-100">
+              <span className="text-slate-600 dark:text-slate-400">Tax</span>
+              <span className="font-mono font-medium text-slate-900 dark:text-slate-100">
                 {tax.toLocaleString(undefined, { minimumFractionDigits: 2 })}
               </span>
             </div>
-            <div className="flex justify-between font-medium pt-2 border-t border-erp-slate-200 dark:border-erp-slate-600">
-              <span className="text-erp-slate-900 dark:text-erp-slate-100">Total</span>
-              <span className="font-mono text-erp-slate-900 dark:text-erp-slate-100">
+            <div className="flex justify-between font-semibold pt-3 border-t border-slate-200 dark:border-slate-600">
+              <span className="text-slate-900 dark:text-slate-100">Total</span>
+              <span className="font-mono text-slate-900 dark:text-slate-100">
                 {total.toLocaleString(undefined, { minimumFractionDigits: 2 })}
               </span>
             </div>
           </div>
 
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-2">
             <button
               type="button"
               onClick={onClose}

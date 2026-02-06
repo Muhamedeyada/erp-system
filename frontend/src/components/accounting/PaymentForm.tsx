@@ -129,7 +129,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
                 onChange={(e) => setInvoiceId(e.target.value)}
                 required
                 disabled={loadingInvoices}
-                className="w-full px-4 py-2 erp-input"
+                className="erp-select w-full px-4 py-2"
               >
                 <option value="">Select invoice</option>
                 {invoices.map((inv) => {
@@ -169,7 +169,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
-              className="w-full px-4 py-2 erp-input"
+              className="erp-input w-full px-4 py-2"
             />
             {amt > outstanding && outstanding > 0 && (
               <p className="mt-1 text-xs text-red-600 dark:text-red-400">
@@ -187,7 +187,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
               value={paymentDate}
               onChange={(e) => setPaymentDate(e.target.value)}
               required
-              className="w-full px-4 py-2 erp-input"
+              className="erp-input w-full px-4 py-2"
             />
           </div>
 
@@ -198,7 +198,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
             <select
               value={method}
               onChange={(e) => setMethod(e.target.value as (typeof METHODS)[number])}
-              className="w-full px-4 py-2 erp-input"
+              className="erp-select w-full px-4 py-2"
             >
               {METHODS.map((m) => (
                 <option key={m} value={m}>
@@ -217,7 +217,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
               value={reference}
               onChange={(e) => setReference(e.target.value)}
               placeholder="Optional"
-              className="w-full px-4 py-2 erp-input"
+              className="erp-input w-full px-4 py-2"
             />
           </div>
 

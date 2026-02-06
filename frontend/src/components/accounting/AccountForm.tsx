@@ -122,7 +122,7 @@ export function AccountForm({ account, accounts, onClose, onSubmit }: AccountFor
                 setParentId('');
               }}
               disabled={isEdit}
-              className="erp-input disabled:opacity-50 disabled:cursor-not-allowed"
+              className="erp-select disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {ACCOUNT_TYPES.map((t) => (
                 <option key={t} value={t}>{t}</option>
@@ -136,7 +136,7 @@ export function AccountForm({ account, accounts, onClose, onSubmit }: AccountFor
               <select
                 value={parentId}
                 onChange={(e) => setParentId(e.target.value)}
-                className="erp-input"
+                className="erp-select"
               >
                 <option value="">None (top level)</option>
                 {parentOptions
