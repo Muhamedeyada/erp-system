@@ -149,7 +149,7 @@ export function TrialBalance() {
       )}
 
       {data && (
-        <div className="erp-card overflow-hidden">
+        <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
           <div className="erp-table-wrapper">
             <table className="w-full text-sm">
               <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">

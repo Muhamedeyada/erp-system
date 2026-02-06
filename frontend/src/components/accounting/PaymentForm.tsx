@@ -106,7 +106,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
       onClick={onClose}
     >
       <div
-        className="erp-card w-full max-w-md shadow-erp-lg"
+        className="erp-card w-full max-w-md shadow-erp-lg dark:shadow-erp-dark-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-4 sm:p-6 border-b border-erp-slate-200 dark:border-erp-slate-700">

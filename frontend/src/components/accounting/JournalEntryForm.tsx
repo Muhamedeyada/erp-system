@@ -110,7 +110,7 @@ export function JournalEntryForm({ accounts, onClose, onSubmit }: JournalEntryFo
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto" onClick={onClose}>
       <div
-        className="erp-card w-full max-w-3xl my-8 shadow-erp-lg"
+        className="erp-card w-full max-w-3xl my-8 shadow-erp-lg dark:shadow-erp-dark-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-4 sm:p-6 border-b border-erp-slate-200 dark:border-erp-slate-700">

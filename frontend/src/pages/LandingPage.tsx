@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { DarkModeToggle } from '../components/DarkModeToggle';
+import { useDarkMode } from '../contexts/DarkModeContext';
 import { useInView } from '../hooks/useInView';
 import {
   BarChart3,
@@ -14,6 +15,18 @@ import {
   Sparkles,
   TrendingUp,
 } from 'lucide-react';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Pie,
+  Cell,
+  Legend,
+} from 'recharts';
 
 /* Static data for landing page previews */
 const SAMPLE_STATS = [
@@ -21,6 +34,33 @@ const SAMPLE_STATS = [
   { label: 'Accounts', value: '48' },
   { label: 'Outstanding', value: '$12,450' },
 ];
+
+const SAMPLE_REVENUE_EXPENSE = [
+  { name: 'Revenue', value: 28450, fill: '#0284c7' },
+  { name: 'Expenses', value: 18230, fill: '#dc2626' },
+];
+
+const SAMPLE_INVOICE_STATUS = [
+  { name: 'PAID', value: 12, fill: '#059669' },
+  { name: 'PARTIALLY_PAID', value: 5, fill: '#d97706' },
+  { name: 'SENT', value: 8, fill: '#0284c7' },
+  { name: 'DRAFT', value: 3, fill: '#64748b' },
+];
+
+const CHART_DARK = {
+  gridStroke: '#475569',
+  tickFill: '#94a3b8',
+  tooltipBg: '#1e293b',
+  tooltipBorder: '#334155',
+  tooltipColor: '#f8fafc',
+};
+const CHART_LIGHT = {
+  gridStroke: '#e2e8f0',
+  tickFill: '#64748b',
+  tooltipBg: '#ffffff',
+  tooltipBorder: '#e2e8f0',
+  tooltipColor: '#0f172a',
+};
 
 const SAMPLE_INVOICE = {
   number: 'INV-2024-0842',
@@ -69,23 +109,26 @@ const FEATURES = [
 
 export function LandingPage() {
   const { isAuthenticated, isLoading, user } = useAuth();
+  const { isDark } = useDarkMode();
   const dashboardRef = useInView();
+  const chartsRef = useInView();
   const invoiceRef = useInView();
   const featuresRef = useInView();
   const statsRef = useInView();
   const ctaRef = useInView();
   const companyName = user?.tenant?.name || 'Dashboard';
+  const chartTheme = isDark ? CHART_DARK : CHART_LIGHT;
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
+      <div className="min-h-screen flex items-center justify-center erp-page-bg">
         <div className="animate-spin rounded-full h-12 w-12 border-2 border-sky-500 border-t-transparent" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+    <div className="min-h-screen flex flex-col erp-page-bg transition-colors duration-300">
       {/* Nav - full width, left and right aligned */}
       <header className="sticky top-0 z-40 w-full bg-white/80 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700">
         <div className="w-full px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
@@ -117,7 +160,7 @@ export function LandingPage() {
 
       <main className="flex-1">
         {/* Hero - full viewport so "See Your Dashboard" is below fold */}
-        <section className="landing-hero-bg relative px-4 py-16 sm:py-20 md:py-24 lg:py-28 bg-gradient-to-b from-white via-sky-50/30 to-slate-100 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/95 min-h-screen flex items-center">
+        <section className="landing-hero-bg relative px-4 py-16 sm:py-20 md:py-24 lg:py-28 bg-gradient-to-b from-white via-sky-100/60 to-slate-200 dark:from-slate-900 dark:via-slate-800 dark:to-slate-800 min-h-screen flex items-center">
           <div className="wave-bg-shape" aria-hidden="true" />
           <svg className="wave-svg" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
             <path d="M0,64 C360,120 720,0 1080,64 C1260,96 1380,96 1440,64 L1440,120 L0,120 Z" />
@@ -173,7 +216,7 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Dashboard preview - static mock */}
+        {/* Dashboard preview - static mock with charts */}
         <section className="landing-section-dashboard px-4 pb-16 sm:pb-24 pt-8 transition-colors duration-300">
           <div
             ref={dashboardRef.ref}
@@ -187,7 +230,7 @@ export function LandingPage() {
                 See Your Dashboard in Seconds
               </h2>
             </div>
-            <div className="erp-card overflow-hidden shadow-lg">
+            <div className="erp-card overflow-hidden">
               <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80">
                 <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Welcome back, John</p>
                 <p className="text-slate-700 dark:text-slate-300">Acme Inc</p>
@@ -200,17 +243,84 @@ export function LandingPage() {
                   </div>
                 ))}
               </div>
-              <div className="p-4 sm:p-6 border-t border-slate-200 dark:border-slate-700">
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Revenue vs Expenses (This Month)</p>
-                <div className="h-32 flex gap-4 items-end">
-                  <div className="flex-1 flex flex-col items-center gap-2">
-                    <div className="w-full bg-sky-500 rounded-t h-20 max-h-[80px]" style={{ height: '80%' }} />
-                    <span className="text-xs text-slate-600 dark:text-slate-300">Revenue</span>
+            </div>
+
+            {/* Charts - Revenue vs Expenses & Invoice Status */}
+            <div
+              ref={chartsRef.ref}
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-6 ${chartsRef.isInView ? 'animate-on-scroll visible' : 'animate-on-scroll'}`}
+            >
+              <div className="erp-card p-4 sm:p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="p-2 rounded-lg bg-sky-100 dark:bg-sky-900/40">
+                    <BarChart3 className="w-5 h-5 text-sky-600 dark:text-sky-400" />
                   </div>
-                  <div className="flex-1 flex flex-col items-center gap-2">
-                    <div className="w-full bg-red-500/80 rounded-t h-16 max-h-[64px]" style={{ height: '64%' }} />
-                    <span className="text-xs text-slate-600 dark:text-slate-300">Expenses</span>
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white">
+                    Revenue vs Expenses (This Month)
+                  </h3>
+                </div>
+                <div className="h-56 sm:h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={SAMPLE_REVENUE_EXPENSE}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.gridStroke} />
+                      <XAxis dataKey="name" tick={{ fill: chartTheme.tickFill, fontSize: 12 }} />
+                      <YAxis tick={{ fill: chartTheme.tickFill, fontSize: 12 }} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: chartTheme.tooltipBg,
+                          border: `1px solid ${chartTheme.tooltipBorder}`,
+                          borderRadius: '0.5rem',
+                          color: chartTheme.tooltipColor,
+                        }}
+                        formatter={(value: number) => value.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      />
+                      <Bar dataKey="value" name="Amount" radius={[4, 4, 0, 0]}>
+                        {SAMPLE_REVENUE_EXPENSE.map((entry, i) => (
+                          <Cell key={i} fill={entry.fill} />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              <div className="erp-card p-4 sm:p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/40">
+                    <PieChart className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   </div>
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white">
+                    Invoice Status
+                  </h3>
+                </div>
+                <div className="h-56 sm:h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={SAMPLE_INVOICE_STATUS}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={50}
+                        outerRadius={70}
+                        paddingAngle={2}
+                        dataKey="value"
+                        nameKey="name"
+                      >
+                        {SAMPLE_INVOICE_STATUS.map((entry, i) => (
+                          <Cell key={i} fill={entry.fill} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: chartTheme.tooltipBg,
+                          border: `1px solid ${chartTheme.tooltipBorder}`,
+                          borderRadius: '0.5rem',
+                          color: chartTheme.tooltipColor,
+                        }}
+                      />
+                      <Legend wrapperStyle={{ color: chartTheme.tooltipColor }} />
+                    </PieChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
             </div>

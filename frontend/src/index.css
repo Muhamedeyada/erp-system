@@ -30,7 +30,24 @@
   }
 
   body {
-    @apply bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans;
+    @apply erp-page-bg text-slate-900 dark:text-slate-100 font-sans min-h-screen;
+  }
+
+  /* Page background - gradient with stronger colors (used on body and Layout) */
+  .erp-page-bg {
+    background-color: #f1f5f9;
+    background-image: radial-gradient(at 20% 25%, rgba(186, 230, 253, 0.7) 0%, transparent 50%),
+      radial-gradient(at 80% 75%, rgba(224, 242, 254, 0.9) 0%, transparent 50%),
+      radial-gradient(at 50% 50%, rgba(241, 245, 249, 0.6) 0%, transparent 60%),
+      linear-gradient(180deg, #f8fafc 0%, #e0f2fe 40%, #f1f5f9 100%);
+  }
+
+  .dark .erp-page-bg {
+    background-color: #0f172a;
+    background-image: radial-gradient(at 20% 25%, rgba(30, 58, 138, 0.45) 0%, transparent 55%),
+      radial-gradient(at 80% 75%, rgba(51, 65, 85, 0.5) 0%, transparent 55%),
+      radial-gradient(at 50% 50%, rgba(14, 165, 233, 0.08) 0%, transparent 60%),
+      linear-gradient(180deg, #0f172a 0%, #0c1929 40%, #020617 100%);
   }
 
   /* ERP-style focus ring */
@@ -44,9 +61,20 @@
 }
 
 @layer components {
-  /* ERP card */
+  /* ERP card - light: normal shadow; dark: visible glow + depth shadow */
   .erp-card {
-    @apply bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm;
+    @apply bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700
+           transition-shadow duration-200;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  }
+  .dark .erp-card {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 4px 12px -2px rgba(0,0,0,0.5), 0 8px 24px -4px rgba(0,0,0,0.35);
+  }
+  .erp-card:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.06);
+  }
+  .dark .erp-card:hover {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 10px 20px -5px rgba(0,0,0,0.5), 0 16px 32px -8px rgba(0,0,0,0.4);
   }
 
   /* ERP primary button */
@@ -113,7 +141,7 @@
   left: -5%;
   right: -5%;
   height: 55%;
-  background: linear-gradient(135deg, rgba(224, 242, 254, 0.6) 0%, rgba(186, 230, 253, 0.35) 40%, rgba(125, 211, 252, 0.2) 70%, rgba(56, 189, 248, 0.08) 100%);
+  background: linear-gradient(135deg, rgba(224, 242, 254, 0.85) 0%, rgba(186, 230, 253, 0.6) 40%, rgba(125, 211, 252, 0.4) 70%, rgba(56, 189, 248, 0.2) 100%);
   border-radius: 50% 50% 0 0 / 40% 40% 0 0;
   transform: scaleX(1.15);
   z-index: 0;
@@ -121,7 +149,7 @@
 }
 
 .dark .landing-hero-bg .wave-bg-shape {
-  background: linear-gradient(135deg, rgba(51, 65, 85, 0.7) 0%, rgba(30, 41, 59, 0.5) 50%, rgba(15, 23, 42, 0.3) 100%);
+  background: linear-gradient(135deg, rgba(51, 65, 85, 0.9) 0%, rgba(30, 41, 59, 0.7) 50%, rgba(14, 165, 233, 0.1) 100%);
 }
 
 /* Scroll animation */
@@ -152,59 +180,59 @@
   padding: 0 0.1em;
 }
 
-/* Landing page - section backgrounds (light & dark mode) */
+/* Landing page - section backgrounds (stronger colors) */
 .landing-section-dashboard {
-  background-color: #f8fafc;
-  background-image: radial-gradient(at 20% 30%, rgba(224, 242, 254, 0.4) 0%, transparent 50%),
-    radial-gradient(at 80% 70%, rgba(241, 245, 249, 0.6) 0%, transparent 50%);
+  background-color: #f1f5f9;
+  background-image: radial-gradient(at 20% 30%, rgba(186, 230, 253, 0.65) 0%, transparent 55%),
+    radial-gradient(at 80% 70%, rgba(224, 242, 254, 0.85) 0%, transparent 55%);
 }
 
 .dark .landing-section-dashboard {
   background-color: #0f172a;
-  background-image: radial-gradient(at 20% 30%, rgba(30, 58, 138, 0.15) 0%, transparent 50%),
-    radial-gradient(at 80% 70%, rgba(30, 41, 59, 0.6) 0%, transparent 50%);
+  background-image: radial-gradient(at 20% 30%, rgba(30, 58, 138, 0.4) 0%, transparent 55%),
+    radial-gradient(at 80% 70%, rgba(51, 65, 85, 0.7) 0%, transparent 55%);
 }
 
 .landing-section-invoice {
-  background-color: #ffffff;
-  background-image: linear-gradient(180deg, rgba(248, 250, 252, 0.5) 0%, transparent 30%);
+  background-color: #f8fafc;
+  background-image: linear-gradient(180deg, rgba(224, 242, 254, 0.5) 0%, rgba(241, 245, 249, 0.4) 30%, transparent 50%);
 }
 
 .dark .landing-section-invoice {
   background-color: #0f172a;
-  background-image: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, transparent 30%);
+  background-image: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(30, 58, 138, 0.15) 40%, transparent 60%);
 }
 
 .landing-section-features {
-  background-color: #f1f5f9;
-  background-image: radial-gradient(at 50% 0%, rgba(224, 242, 254, 0.5) 0%, transparent 40%),
-    radial-gradient(at 0% 100%, rgba(186, 230, 253, 0.2) 0%, transparent 40%),
-    radial-gradient(at 100% 100%, rgba(254, 249, 195, 0.15) 0%, transparent 40%);
+  background-color: #e0f2fe;
+  background-image: radial-gradient(at 50% 0%, rgba(186, 230, 253, 0.8) 0%, transparent 45%),
+    radial-gradient(at 0% 100%, rgba(224, 242, 254, 0.6) 0%, transparent 45%),
+    radial-gradient(at 100% 100%, rgba(254, 249, 195, 0.35) 0%, transparent 45%);
 }
 
 .dark .landing-section-features {
   background-color: #0f172a;
-  background-image: radial-gradient(at 50% 0%, rgba(30, 58, 138, 0.2) 0%, transparent 40%),
-    radial-gradient(at 0% 100%, rgba(30, 41, 59, 0.5) 0%, transparent 40%),
-    radial-gradient(at 100% 100%, rgba(30, 41, 59, 0.4) 0%, transparent 40%);
+  background-image: radial-gradient(at 50% 0%, rgba(30, 58, 138, 0.45) 0%, transparent 45%),
+    radial-gradient(at 0% 100%, rgba(51, 65, 85, 0.7) 0%, transparent 45%),
+    radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.08) 0%, transparent 45%);
 }
 
 .landing-section-stats {
-  background-color: #ffffff;
-  background-image: linear-gradient(135deg, rgba(241, 245, 249, 0.8) 0%, rgba(248, 250, 252, 0.5) 50%, rgba(224, 242, 254, 0.3) 100%);
+  background-color: #f8fafc;
+  background-image: linear-gradient(135deg, rgba(224, 242, 254, 0.7) 0%, rgba(241, 245, 249, 0.8) 50%, rgba(186, 230, 253, 0.5) 100%);
 }
 
 .dark .landing-section-stats {
   background-color: #0f172a;
-  background-image: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 50%, rgba(30, 58, 138, 0.1) 100%);
+  background-image: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.9) 50%, rgba(30, 58, 138, 0.25) 100%);
 }
 
 .landing-section-cta {
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
 }
 
 .dark .landing-section-cta {
-  background: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%);
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #0c4a6e 100%);
 }
 
 .landing-footer {

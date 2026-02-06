@@ -60,7 +60,7 @@ export function Register() {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gradient-to-br from-slate-50 via-slate-100 to-sky-50 dark:from-slate-900 dark:via-slate-800 dark:to-sky-950 px-4 py-8">
+    <div className="min-h-screen relative flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gradient-to-br from-slate-100 via-sky-100 to-sky-50 dark:from-slate-900 dark:via-slate-800 dark:to-sky-950 px-4 py-8">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -left-40 w-80 h-80 rounded-full bg-sky-200/30 dark:bg-sky-500/10 blur-3xl" />
@@ -81,7 +81,7 @@ export function Register() {
           <p className="mt-2 text-slate-600 dark:text-slate-400">Register your company</p>
         </Link>
 
-        <div className="erp-card p-6 sm:p-8 shadow-xl dark:shadow-slate-900/50 backdrop-blur-sm">
+        <div className="erp-card p-6 sm:p-8 shadow-erp-lg dark:shadow-erp-dark-lg backdrop-blur-sm">
           {error && (
             <div className="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
               <p className="text-sm text-red-600 dark:text-red-400">{error}</p>

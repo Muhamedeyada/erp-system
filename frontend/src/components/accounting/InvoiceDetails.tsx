@@ -23,7 +23,7 @@ export function InvoiceDetails({ invoice, onClose, onPaymentAdded }: InvoiceDeta
       onClick={onClose}
     >
       <div
-        className="erp-card w-full max-w-2xl my-8 max-h-[90vh] overflow-y-auto shadow-erp-lg"
+        className="erp-card w-full max-w-2xl my-8 max-h-[90vh] overflow-y-auto shadow-erp-lg dark:shadow-erp-dark-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-4 sm:p-6 border-b border-erp-slate-200 dark:border-erp-slate-700 flex items-center justify-between sticky top-0 bg-white dark:bg-erp-slate-800 z-10">

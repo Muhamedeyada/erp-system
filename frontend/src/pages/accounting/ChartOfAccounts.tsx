@@ -105,7 +105,7 @@ export function ChartOfAccounts() {
         </label>
       </div>
 
-      <div className="erp-card overflow-hidden shadow-erp-lg">
+      <div className="erp-card overflow-hidden shadow-erp-lg dark:shadow-erp-dark-lg">
         {isLoading ? (
           <div className="p-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
         ) : Array.isArray(accounts) && accounts.length === 0 ? (
@@ -145,7 +145,7 @@ export function ChartOfAccounts() {
           onClick={() => setDeletingAccount(null)}
         >
           <div
-            className="erp-card w-full max-w-sm p-6 shadow-erp-lg"
+            className="erp-card w-full max-w-sm p-6 shadow-erp-lg dark:shadow-erp-dark-lg"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-lg font-semibold text-erp-slate-900 dark:text-erp-slate-100 mb-2">

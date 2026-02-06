@@ -91,7 +91,7 @@ export function InvoiceForm({ onClose, onSubmit }: InvoiceFormProps) {
       onClick={onClose}
     >
       <div
-        className="erp-card shadow-erp-lg w-full max-w-2xl my-8"
+        className="erp-card shadow-erp-lg dark:shadow-erp-dark-lg w-full max-w-2xl my-8"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-6 border-b border-erp-slate-200 dark:border-erp-slate-700">
