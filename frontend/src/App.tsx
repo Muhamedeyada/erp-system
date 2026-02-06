@@ -5,8 +5,8 @@ import { Layout } from './components/Layout';
 import { LandingPage } from './pages/LandingPage';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
-import { DashboardPage } from './pages/DashboardPage';
-import { AccountsPage } from './pages/AccountsPage';
+import { Dashboard } from './pages/Dashboard';
+import { ChartOfAccounts } from './pages/accounting/ChartOfAccounts';
 import { JournalEntriesPage } from './pages/JournalEntriesPage';
 import { InvoicesPage } from './pages/InvoicesPage';
 import { PaymentsPage } from './pages/PaymentsPage';
@@ -25,7 +25,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <DashboardPage />
+                  <Dashboard />
                 </Layout>
               </ProtectedRoute>
             }
@@ -35,7 +35,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <AccountsPage />
+                  <ChartOfAccounts />
                 </Layout>
               </ProtectedRoute>
             }

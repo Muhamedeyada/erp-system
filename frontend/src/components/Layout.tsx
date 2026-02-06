@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { useDarkMode } from '../contexts/DarkModeContext';
 import {
   LayoutDashboard,
   BookOpen,
@@ -9,10 +8,9 @@ import {
   CreditCard,
   BarChart3,
   LogOut,
-  Sun,
-  Moon,
   Menu,
 } from 'lucide-react';
+import { DarkModeToggle } from './DarkModeToggle';
 import { useState } from 'react';
 
 const navItems = [
@@ -30,7 +28,6 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const { user, logout } = useAuth();
-  const { isDark, toggle } = useDarkMode();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -81,17 +78,7 @@ export function Layout({ children }: LayoutProps) {
           </button>
           <div className="flex-1 lg:flex-none" />
           <div className="flex items-center gap-4">
-            <button
-              onClick={toggle}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-              title={isDark ? 'Light mode' : 'Dark mode'}
-            >
-              {isDark ? (
-                <Sun className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-              ) : (
-                <Moon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-              )}
-            </button>
+            <DarkModeToggle />
             <div className="hidden sm:block text-right">
               <p className="text-sm font-medium text-gray-900 dark:text-white">
                 {user?.name || user?.email}
