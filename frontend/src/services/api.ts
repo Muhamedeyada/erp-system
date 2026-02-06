@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
-const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+// Normalize: no trailing slash so we never get double slash (e.g. ...vercel.app//api)
+const apiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/+$/, '');
 
 export const api: AxiosInstance = axios.create({
   baseURL: `${apiUrl}/api`,
@@ -49,6 +50,11 @@ export const authApi = {
   registerCompany: (data: { companyName: string; email: string; password: string; name?: string }) =>
     api.post('/auth/register-company', data),
   me: () => api.get('/auth/me'),
+};
+
+export const modulesApi = {
+  /** Enabled modules for the current tenant (requires auth). */
+  listEnabled: () => api.get<import('../types').EnabledModule[]>('/tenant/modules'),
 };
 
 export const accountsApi = {
