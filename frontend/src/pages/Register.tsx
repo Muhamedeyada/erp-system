@@ -172,7 +172,7 @@ export function Register() {
 
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                Your Name <span className="text-slate-400 text-xs">(optional)</span>
+                Your Name
               </label>
               <input
                 id="name"
