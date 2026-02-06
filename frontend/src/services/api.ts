@@ -73,7 +73,7 @@ export const journalEntriesApi = {
 };
 
 export const invoicesApi = {
-  list: (params?: { page?: number; limit?: number; status?: string }) =>
+  list: (params?: { page?: number; limit?: number; status?: string; startDate?: string; endDate?: string }) =>
     api.get('/accounting/invoices', { params }),
   get: (id: string) => api.get(`/accounting/invoices/${id}`),
   create: (data: {

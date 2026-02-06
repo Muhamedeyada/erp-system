@@ -174,7 +174,24 @@ export class InvoicesService {
         });
       }
 
-      return this.findOne(tenantId, invoice.id);
+      const created = await tx.invoice.findFirst({
+        where: { id: invoice.id, tenantId },
+        include: {
+          lines: true,
+          payments: true,
+          journalEntry: {
+            include: {
+              lines: {
+                include: {
+                  account: { select: { id: true, code: true, name: true } },
+                },
+              },
+            },
+          },
+        },
+      });
+      if (!created) throw new NotFoundException('Invoice not found');
+      return created;
     });
   }
 
@@ -183,9 +200,16 @@ export class InvoicesService {
     page = 1,
     limit = 10,
     status?: InvoiceStatus,
+    startDate?: string,
+    endDate?: string,
   ) {
     const where: Prisma.InvoiceWhereInput = { tenantId };
     if (status) where.status = status;
+    if (startDate || endDate) {
+      where.date = {};
+      if (startDate) where.date.gte = new Date(startDate);
+      if (endDate) where.date.lte = new Date(endDate);
+    }
 
     const [data, total] = await Promise.all([
       this.prisma.invoice.findMany({

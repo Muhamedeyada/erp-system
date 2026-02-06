@@ -167,7 +167,23 @@ export class PaymentsService {
         tx,
       );
 
-      return this.findOne(tenantId, payment.id);
+      const created = await tx.payment.findFirst({
+        where: { id: payment.id, tenantId },
+        include: {
+          invoice: true,
+          journalEntry: {
+            include: {
+              lines: {
+                include: {
+                  account: { select: { id: true, code: true, name: true } },
+                },
+              },
+            },
+          },
+        },
+      });
+      if (!created) throw new NotFoundException('Payment not found');
+      return created;
     });
   }
 

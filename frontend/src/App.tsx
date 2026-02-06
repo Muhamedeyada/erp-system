@@ -7,9 +7,9 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
 import { ChartOfAccounts } from './pages/accounting/ChartOfAccounts';
-import { JournalEntriesPage } from './pages/JournalEntriesPage';
-import { InvoicesPage } from './pages/InvoicesPage';
-import { PaymentsPage } from './pages/PaymentsPage';
+import { JournalEntries } from './pages/accounting/JournalEntries';
+import { Invoices } from './pages/accounting/Invoices';
+import { Payments } from './pages/accounting/Payments';
 import { TrialBalancePage } from './pages/TrialBalancePage';
 
 function App() {
@@ -45,7 +45,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <JournalEntriesPage />
+                  <JournalEntries />
                 </Layout>
               </ProtectedRoute>
             }
@@ -55,7 +55,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <InvoicesPage />
+                  <Invoices />
                 </Layout>
               </ProtectedRoute>
             }
@@ -65,7 +65,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <PaymentsPage />
+                  <Payments />
                 </Layout>
               </ProtectedRoute>
             }

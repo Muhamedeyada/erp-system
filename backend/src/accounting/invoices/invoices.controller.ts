@@ -34,6 +34,8 @@ export class InvoicesController {
     @Query('page') page?: string,
     @Query('limit') limit?: string,
     @Query('status') status?: InvoiceStatus,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
   ) {
     const pageNum = page ? parseInt(page, 10) : 1;
     const limitNum = limit ? parseInt(limit, 10) : 10;
@@ -42,6 +44,8 @@ export class InvoicesController {
       pageNum,
       limitNum,
       status,
+      startDate,
+      endDate,
     );
   }
 

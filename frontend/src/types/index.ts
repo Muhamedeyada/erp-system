@@ -77,6 +77,7 @@ export interface Payment {
   method: PaymentMethod;
   reference?: string;
   journalEntryId?: string;
+  invoice?: { id: string; invoiceNumber: string; customerName?: string; total?: number; paidAmount?: number; status?: string };
 }
 
 export interface LoginResponse {
