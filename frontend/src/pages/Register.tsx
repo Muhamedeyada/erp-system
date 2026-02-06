@@ -61,7 +61,6 @@ export function Register() {
 
   return (
     <div className="min-h-screen relative flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gradient-to-br from-slate-100 via-sky-100 to-sky-50 dark:from-slate-900 dark:via-slate-800 dark:to-sky-950 px-4 py-8">
-      {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -left-40 w-80 h-80 rounded-full bg-sky-300/50 dark:bg-sky-500/20 blur-3xl" />
         <div className="absolute top-1/3 -right-32 w-72 h-72 rounded-full bg-sky-200/60 dark:bg-sky-600/15 blur-3xl" />

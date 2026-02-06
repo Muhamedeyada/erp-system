@@ -1,5 +1,12 @@
 export type UserRole = 'ADMIN' | 'USER';
 export type AccountType = 'ASSET' | 'LIABILITY' | 'EQUITY' | 'REVENUE' | 'EXPENSE';
+
+export interface EnabledModule {
+  code: string;
+  name: string;
+  description: string | null;
+  enabledAt: string;
+}
 export type InvoiceStatus = 'DRAFT' | 'SENT' | 'PARTIALLY_PAID' | 'PAID' | 'OVERDUE' | 'CANCELLED';
 export type PaymentMethod = 'CASH' | 'BANK' | 'CHEQUE';
 

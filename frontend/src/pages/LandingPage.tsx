@@ -27,7 +27,6 @@ import {
   Cell,
 } from 'recharts';
 
-/* Static data for landing page previews */
 const SAMPLE_STATS = [
   { label: 'Total Invoices', value: '1,247' },
   { label: 'Accounts', value: '48' },
@@ -128,7 +127,6 @@ export function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col erp-page-bg transition-colors duration-300">
-      {/* Nav - full width, left and right aligned */}
       <header className="sticky top-0 z-40 w-full bg-white/80 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700">
         <div className="w-full px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
           <Link to="/" className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight shrink-0">
@@ -158,7 +156,6 @@ export function LandingPage() {
       </header>
 
       <main className="flex-1">
-        {/* Hero - full viewport so "See Your Dashboard" is below fold */}
         <section className="landing-hero-bg relative px-4 py-16 sm:py-20 md:py-24 lg:py-28 bg-gradient-to-b from-white via-sky-100/60 to-slate-200 dark:from-slate-900 dark:via-slate-800 dark:to-slate-800 min-h-screen flex items-center">
           <div className="wave-bg-shape" aria-hidden="true" />
           <svg className="wave-svg" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
@@ -215,7 +212,6 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Dashboard preview - static mock with charts */}
         <section className="landing-section-dashboard px-4 pb-16 sm:pb-24 pt-8 transition-colors duration-300">
           <div
             ref={dashboardRef.ref}
@@ -244,7 +240,6 @@ export function LandingPage() {
               </div>
             </div>
 
-            {/* Charts - Revenue vs Expenses & Invoice Status */}
             <div
               ref={chartsRef.ref}
               className={`grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-6 ${chartsRef.isInView ? 'animate-on-scroll visible' : 'animate-on-scroll'}`}
@@ -353,7 +348,6 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Invoice preview - static mock */}
         <section className="landing-section-invoice px-4 pb-16 sm:pb-24 transition-colors duration-300">
           <div
             ref={invoiceRef.ref}
@@ -429,7 +423,6 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* What you can do - features */}
         <section className="landing-section-features px-4 py-16 sm:py-24 transition-colors duration-300">
           <div
             ref={featuresRef.ref}
@@ -471,7 +464,6 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Stats */}
         <section className="landing-section-stats px-4 py-16 sm:py-24 transition-colors duration-300">
           <div
             ref={statsRef.ref}
@@ -506,7 +498,6 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* CTA */}
         <section
           ref={ctaRef.ref}
           className={`landing-section-cta px-4 py-16 sm:py-24 transition-colors duration-300 ${ctaRef.isInView ? 'animate-on-scroll visible' : 'animate-on-scroll'}`}
@@ -547,7 +538,6 @@ export function LandingPage() {
         </section>
       </main>
 
-      {/* Footer - full width, left and right aligned */}
       <footer className="landing-footer w-full py-6 sm:py-8 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
         <div className="w-full flex flex-row items-center justify-between gap-4 min-w-0">
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 truncate min-w-0">

@@ -33,7 +33,6 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen erp-page-bg flex">
-      {/* Sidebar - responsive: drawer on mobile, static on lg+ */}
       <aside
         className={`fixed lg:static inset-y-0 left-0 z-40 w-64 sm:w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform transition-transform duration-200 ease-out lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'

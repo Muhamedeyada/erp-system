@@ -10,7 +10,6 @@ async function main() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const tx = _tx as any;
 
-    // 1. Ensure ACCOUNTING module exists (use bracket: 'module' is reserved in JS)
     await tx['module'].upsert({
       where: { code: 'ACCOUNTING' },
       update: {},
@@ -23,7 +22,6 @@ async function main() {
     });
     console.log('  ✓ ACCOUNTING module ready');
 
-    // 2. Create demo tenant
     const tenant = await tx.tenant.upsert({
       where: { slug: 'demo' },
       update: { name: 'Demo Company' },
@@ -34,7 +32,6 @@ async function main() {
     });
     console.log('  ✓ Demo tenant created');
 
-    // 3. Enable ACCOUNTING module for demo tenant
     await tx.tenantModule.upsert({
       where: {
         tenantId_moduleCode: {
@@ -52,7 +49,6 @@ async function main() {
     });
     console.log('  ✓ ACCOUNTING module enabled');
 
-    // 4. Create admin user
     const hashedPassword = await bcrypt.hash('demo123', 10);
     await tx.user.upsert({
       where: {
@@ -72,7 +68,6 @@ async function main() {
     });
     console.log('  ✓ Admin user created (demo@demo.com / demo123)');
 
-    // 5. Delete existing demo data (for idempotent re-seeding)
     await tx.payment.deleteMany({ where: { tenantId: tenant.id } });
     await tx.invoiceLine.deleteMany({
       where: { invoice: { tenantId: tenant.id } },
@@ -84,7 +79,6 @@ async function main() {
     await tx.journalEntry.deleteMany({ where: { tenantId: tenant.id } });
     await tx.account.deleteMany({ where: { tenantId: tenant.id } });
 
-    // 6. Create chart of accounts
     const acc1000 = await tx.account.create({
       data: { tenantId: tenant.id, code: '1000', name: 'Assets', type: 'ASSET' },
     });
@@ -250,7 +244,6 @@ async function main() {
     });
     console.log('  ✓ Chart of accounts created');
 
-    // 7. Create journal entries (debit = credit for each)
     const je1 = await tx.journalEntry.create({
       data: {
         tenantId: tenant.id,
@@ -297,7 +290,6 @@ async function main() {
     });
     console.log('  ✓ 3 journal entries created');
 
-    // 8. Create invoices
     const inv1 = await tx.invoice.create({
       data: {
         tenantId: tenant.id,
@@ -339,7 +331,6 @@ async function main() {
     });
     console.log('  ✓ 2 invoices created (PAID, PARTIALLY_PAID)');
 
-    // 9. Create payment (linked to INV-002)
     await tx.payment.create({
       data: {
         tenantId: tenant.id,

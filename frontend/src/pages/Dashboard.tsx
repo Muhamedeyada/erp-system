@@ -26,7 +26,6 @@ function countAccounts(tree: Array<{ children?: unknown[] }>): number {
   }, 0);
 }
 
-/* ERP-style chart colors: primary blue, emerald, amber, red */
 const PIE_COLORS = ['#0284c7', '#059669', '#d97706', '#dc2626', '#7c3aed', '#64748b'];
 
 const CHART_DARK = {

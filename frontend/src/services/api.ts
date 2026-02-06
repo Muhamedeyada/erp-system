@@ -1,10 +1,12 @@
 import axios, { AxiosInstance } from 'axios';
+import type { EnabledModule } from '../types';
 
-// Normalize: no trailing slash so we never get double slash (e.g. ...vercel.app//api)
-const apiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/+$/, '');
+// No trailing slash; collapse any double slash (e.g. ...vercel.app//api -> ...vercel.app/api)
+const raw = (import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/+$/, '');
+const baseURL = `${raw}/api`.replace(/([^:])\/\//g, '$1/');
 
 export const api: AxiosInstance = axios.create({
-  baseURL: `${apiUrl}/api`,
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -53,8 +55,7 @@ export const authApi = {
 };
 
 export const modulesApi = {
-  /** Enabled modules for the current tenant (requires auth). */
-  listEnabled: () => api.get<import('../types').EnabledModule[]>('/tenant/modules'),
+  listEnabled: () => api.get<EnabledModule[]>('/tenant/modules'),
 };
 
 export const accountsApi = {

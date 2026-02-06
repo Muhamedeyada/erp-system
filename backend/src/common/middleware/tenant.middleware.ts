@@ -7,7 +7,6 @@ import { Request, Response, NextFunction } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from '../decorators/jwt-payload.interface';
 
-// Extend Express Request to include tenantId and jwtPayload
 declare global {
   namespace Express {
     interface Request {
@@ -30,8 +29,6 @@ export class TenantMiddleware implements NestMiddleware {
         req.tenantId = payload.tenantId;
         req.jwtPayload = payload;
       } catch {
-        // Invalid/expired token - leave tenantId/user undefined
-        // JwtAuthGuard will reject on protected routes
       }
     }
     next();
