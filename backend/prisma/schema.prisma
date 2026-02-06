@@ -1,0 +1,239 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============ ENUMS ============
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum AccountType {
+  ASSET
+  LIABILITY
+  EQUITY
+  REVENUE
+  EXPENSE
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CASH
+  BANK
+  CHEQUE
+}
+
+// ============ TENANT & MODULES ============
+
+model Tenant {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users          User[]
+  tenantModules  TenantModule[]
+  accounts       Account[]
+  journalEntries JournalEntry[]
+  invoices       Invoice[]
+  payments       Payment[]
+
+  @@map("tenants")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String
+  password  String
+  name      String?
+  role      UserRole @default(USER)
+  tenantId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, email])
+  @@index([tenantId])
+  @@map("users")
+}
+
+model Module {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tenantModules TenantModule[]
+
+  @@map("modules")
+}
+
+model TenantModule {
+  tenantId   String
+  moduleCode String
+  isEnabled  Boolean   @default(true)
+  enabledAt  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  module Module @relation(fields: [moduleCode], references: [code], onDelete: Cascade)
+
+  @@id([tenantId, moduleCode])
+  @@index([tenantId])
+  @@index([moduleCode])
+  @@map("tenant_modules")
+}
+
+// ============ CHART OF ACCOUNTS ============
+
+model Account {
+  id        String      @id @default(uuid())
+  code      String
+  name      String
+  type      AccountType
+  parentId  String?
+  isActive  Boolean     @default(true)
+  tenantId  String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  tenant   Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  parent   Account?  @relation("AccountHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children Account[] @relation("AccountHierarchy")
+
+  journalEntryLines JournalEntryLine[]
+
+  @@unique([tenantId, code])
+  @@index([tenantId])
+  @@index([parentId])
+  @@map("accounts")
+}
+
+// ============ JOURNAL ENTRIES ============
+
+model JournalEntry {
+  id          String   @id @default(uuid())
+  entryNumber String
+  date        DateTime
+  description String?
+  reference   String?
+  tenantId    String
+  createdAt   DateTime @default(now())
+
+  tenant   Tenant             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  lines    JournalEntryLine[]
+  invoices Invoice[]
+  payments Payment[]
+
+  @@unique([tenantId, entryNumber])
+  @@index([tenantId])
+  @@index([date])
+  @@map("journal_entries")
+}
+
+model JournalEntryLine {
+  id          String   @id @default(uuid())
+  entryId     String
+  accountId   String
+  debit       Decimal  @db.Decimal(15, 2)
+  credit      Decimal  @db.Decimal(15, 2)
+  description String?
+  createdAt   DateTime @default(now())
+
+  entry   JournalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  account Account      @relation(fields: [accountId], references: [id], onDelete: Restrict)
+
+  @@index([entryId])
+  @@index([accountId])
+  @@map("journal_entry_lines")
+}
+
+// ============ INVOICING ============
+
+model Invoice {
+  id             String        @id @default(uuid())
+  invoiceNumber  String
+  customerId     Int?
+  customerName   String
+  date           DateTime
+  dueDate        DateTime
+  subtotal       Decimal       @db.Decimal(15, 2)
+  tax            Decimal       @default(0) @db.Decimal(15, 2)
+  total          Decimal       @db.Decimal(15, 2)
+  status         InvoiceStatus @default(DRAFT)
+  paidAmount     Decimal       @default(0) @db.Decimal(15, 2)
+  tenantId       String
+  journalEntryId String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  tenant       Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  journalEntry JournalEntry? @relation(fields: [journalEntryId], references: [id], onDelete: SetNull)
+  lines        InvoiceLine[]
+  payments     Payment[]
+
+  @@unique([tenantId, invoiceNumber])
+  @@index([tenantId])
+  @@index([date])
+  @@index([status])
+  @@map("invoices")
+}
+
+model InvoiceLine {
+  id          String   @id @default(uuid())
+  invoiceId   String
+  description String
+  quantity    Int
+  unitPrice   Decimal  @db.Decimal(15, 2)
+  total       Decimal  @db.Decimal(15, 2)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+  @@map("invoice_lines")
+}
+
+// ============ PAYMENTS ============
+
+model Payment {
+  id             String        @id @default(uuid())
+  invoiceId      String
+  amount         Decimal       @db.Decimal(15, 2)
+  paymentDate    DateTime
+  method         PaymentMethod
+  reference      String?
+  tenantId       String
+  journalEntryId String?
+  createdAt      DateTime      @default(now())
+
+  tenant       Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  invoice      Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  journalEntry JournalEntry? @relation(fields: [journalEntryId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId])
+  @@index([invoiceId])
+  @@index([paymentDate])
+  @@map("payments")
+}
