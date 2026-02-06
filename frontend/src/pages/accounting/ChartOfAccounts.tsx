@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus } from 'lucide-react';
+import { Plus, BookOpen } from 'lucide-react';
 import { accountsApi } from '../../services/api';
 import { AccountTreeItem } from '../../components/accounting/AccountTreeItem';
 import { AccountForm } from '../../components/accounting/AccountForm';
@@ -70,7 +70,12 @@ export function ChartOfAccounts() {
   return (
     <div className="space-y-4 sm:space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 tracking-tight">Chart of Accounts</h1>
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-sky-100 dark:bg-sky-900/40 shadow-sm">
+            <BookOpen className="w-6 h-6 text-sky-600 dark:text-sky-400" />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 tracking-tight">Chart of Accounts</h1>
+        </div>
         <button
           type="button"
           onClick={() => {
@@ -100,7 +105,7 @@ export function ChartOfAccounts() {
         </label>
       </div>
 
-      <div className="erp-card overflow-hidden">
+      <div className="erp-card overflow-hidden shadow-erp-lg">
         {isLoading ? (
           <div className="p-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
         ) : Array.isArray(accounts) && accounts.length === 0 ? (

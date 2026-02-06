@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, Receipt, Filter } from 'lucide-react';
 import { invoicesApi } from '../../services/api';
 import { InvoiceForm } from '../../components/accounting/InvoiceForm';
 import { InvoiceDetails } from '../../components/accounting/InvoiceDetails';
@@ -102,7 +102,12 @@ export function Invoices() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-white tracking-tight">Invoices</h1>
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 shadow-sm">
+            <Receipt className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-white tracking-tight">Invoices</h1>
+        </div>
         <button
           onClick={() => setShowForm(true)}
           className="erp-btn-primary shrink-0"
@@ -138,7 +143,7 @@ export function Invoices() {
           className="erp-input py-2 text-sm"
         />
         <button onClick={handleFilter} className="erp-btn-secondary">
-          Filter
+          <Filter className="w-4 h-4" /> Filter
         </button>
       </div>
 
@@ -146,7 +151,7 @@ export function Invoices() {
         <div className="py-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
       ) : (
         <>
-          <div className="erp-card overflow-hidden">
+          <div className="erp-card overflow-hidden shadow-erp-lg">
             <div className="erp-table-wrapper">
               <table className="w-full text-sm">
                 <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">

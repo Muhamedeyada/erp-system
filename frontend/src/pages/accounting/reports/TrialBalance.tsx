@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BarChart3, Download, Play } from 'lucide-react';
 import { reportsApi } from '../../../services/api';
 import type { AccountType } from '../../../types';
 
@@ -95,9 +96,14 @@ export function TrialBalance() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 mb-4 sm:mb-6 tracking-tight">
-        Trial Balance Report
-      </h1>
+      <div className="flex items-center gap-3 mb-4 sm:mb-6">
+        <div className="p-2.5 rounded-xl bg-sky-100 dark:bg-sky-900/40 shadow-sm">
+          <BarChart3 className="w-6 h-6 text-sky-600 dark:text-sky-400" />
+        </div>
+        <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 tracking-tight">
+          Trial Balance Report
+        </h1>
+      </div>
 
       <div className="mb-4 sm:mb-6 flex flex-wrap items-center gap-3">
         <label className="flex items-center gap-2 text-sm text-erp-slate-700 dark:text-erp-slate-300">
@@ -123,7 +129,7 @@ export function TrialBalance() {
           disabled={loading}
           className="erp-btn-primary disabled:opacity-50"
         >
-          {loading ? 'Loading...' : 'Run'}
+          <Play className="w-4 h-4" /> {loading ? 'Loading...' : 'Run'}
         </button>
         <label className="flex items-center gap-2 text-sm text-erp-slate-600 dark:text-erp-slate-400">
           <input
@@ -237,7 +243,7 @@ export function TrialBalance() {
               disabled={data.accounts.length === 0}
               className="erp-btn-secondary disabled:opacity-50"
             >
-              Export CSV
+              <Download className="w-4 h-4" /> Export CSV
             </button>
           </div>
         </div>

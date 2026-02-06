@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, Eye, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { journalEntriesApi, accountsApi } from '../../services/api';
 import { JournalEntryForm } from '../../components/accounting/JournalEntryForm';
 import type { JournalEntry, Account } from '../../types';
@@ -69,7 +69,12 @@ export function JournalEntries() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 tracking-tight">Journal Entries</h1>
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-amber-100 dark:bg-amber-900/40 shadow-sm">
+            <FileText className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 tracking-tight">Journal Entries</h1>
+        </div>
         <button
           onClick={() => setShowForm(true)}
           className="erp-btn-primary shrink-0"
@@ -82,7 +87,7 @@ export function JournalEntries() {
         <div className="py-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
       ) : (
         <>
-          <div className="erp-card overflow-hidden">
+          <div className="erp-card overflow-hidden shadow-erp-lg">
             <div className="erp-table-wrapper">
               <table className="w-full text-sm">
                 <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">

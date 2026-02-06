@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, CreditCard } from 'lucide-react';
 import { paymentsApi, invoicesApi } from '../../services/api';
 import { PaymentForm } from '../../components/accounting/PaymentForm';
 import type { Payment, Invoice } from '../../types';
@@ -62,7 +62,12 @@ export function Payments() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 tracking-tight">Payments</h1>
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-violet-100 dark:bg-violet-900/40 shadow-sm">
+            <CreditCard className="w-6 h-6 text-violet-600 dark:text-violet-400" />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 tracking-tight">Payments</h1>
+        </div>
         <button
           onClick={() => setShowForm(true)}
           className="erp-btn-primary shrink-0"
@@ -100,7 +105,7 @@ export function Payments() {
       {loading ? (
         <div className="py-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
       ) : (
-        <div className="erp-card overflow-hidden">
+        <div className="erp-card overflow-hidden shadow-erp-lg">
           <div className="erp-table-wrapper">
             <table className="w-full text-sm">
               <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">

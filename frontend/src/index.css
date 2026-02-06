@@ -44,11 +44,9 @@
 }
 
 @layer components {
-  /* ERP card - elevated with shadow */
+  /* ERP card */
   .erp-card {
-    @apply bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700
-           shadow-md dark:shadow-slate-900/30 hover:shadow-lg dark:hover:shadow-slate-900/40
-           transition-shadow duration-200;
+    @apply bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm;
   }
 
   /* ERP primary button */

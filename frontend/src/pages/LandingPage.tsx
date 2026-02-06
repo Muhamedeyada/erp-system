@@ -116,58 +116,55 @@ export function LandingPage() {
       </header>
 
       <main className="flex-1">
-        {/* Hero - text left, image fills right L-shaped space */}
-        <section className="landing-hero-bg relative min-h-screen flex items-center overflow-hidden">
+        {/* Hero - full viewport so "See Your Dashboard" is below fold */}
+        <section className="landing-hero-bg relative px-4 py-16 sm:py-20 md:py-24 lg:py-28 bg-gradient-to-b from-white via-sky-50/30 to-slate-100 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/95 min-h-screen flex items-center">
           <div className="wave-bg-shape" aria-hidden="true" />
           <svg className="wave-svg" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
             <path d="M0,64 C360,120 720,0 1080,64 C1260,96 1380,96 1440,64 L1440,120 L0,120 Z" />
             <path d="M0,80 C240,40 480,100 720,80 C960,60 1200,100 1440,80 L1440,120 L0,120 Z" opacity="0.6" />
           </svg>
-          <div className="relative z-10 w-full flex flex-col lg:flex-row min-h-screen">
-            <div className="flex-1 flex items-center px-4 sm:px-6 lg:px-8 xl:px-12 py-16 lg:py-0">
-              <div className="max-w-xl xl:max-w-2xl text-left order-2 lg:order-1">
-                <h1 className="font-script text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-semibold text-slate-900 dark:text-white mb-4 sm:mb-6 leading-tight" style={{ fontFamily: "'Caveat', cursive" }}>
+          <div className="max-w-7xl mx-auto w-full relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-center">
+              <div className="text-left order-2 lg:order-1">
+                <h1 className="font-script text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-semibold text-slate-900 dark:text-white mb-5 sm:mb-7 leading-[1.1] tracking-tight drop-shadow-sm" style={{ fontFamily: "'Caveat', cursive" }}>
                   Everything your business needs{' '}
-                  <span className="text-highlight-amber">in one place.</span>
+                  <span className="text-highlight-amber inline-block px-1">in one place.</span>
                 </h1>
-                <p className="font-script text-2xl sm:text-3xl md:text-4xl text-slate-700 dark:text-slate-300 mb-2" style={{ fontFamily: "'Caveat', cursive" }}>
+                <p className="font-script text-3xl sm:text-4xl md:text-5xl lg:text-5xl text-slate-700 dark:text-slate-300 mb-3" style={{ fontFamily: "'Caveat', cursive" }}>
                   Simple, efficient, yet{' '}
-                  <span className="text-highlight-blue">affordable!</span>
+                  <span className="text-highlight-blue inline-block px-1">affordable!</span>
                 </p>
-                <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 mb-8 max-w-lg font-sans">
+                <p className="text-lg sm:text-xl md:text-xl text-slate-500 dark:text-slate-400 mb-10 max-w-xl font-sans leading-relaxed">
                   Free to start. Manage accounting, invoicing, payments & reports.
                 </p>
-                <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-start mb-6">
+                <div className="flex flex-col xs:flex-row gap-4 sm:gap-5 justify-start mb-8">
                   {isAuthenticated ? (
-                    <Link to="/dashboard" className="erp-btn-primary px-8 py-3 text-base cursor-pointer">
+                    <Link to="/dashboard" className="erp-btn-primary px-10 py-4 text-lg cursor-pointer shadow-lg shadow-sky-500/25">
                       {companyName}
                     </Link>
                   ) : (
                     <>
-                      <Link to="/register" className="erp-btn-primary px-8 py-3 text-base">
+                      <Link to="/register" className="erp-btn-primary px-10 py-4 text-lg shadow-lg shadow-sky-500/25 hover:shadow-xl hover:shadow-sky-500/30 transition-shadow">
                         Start now – It&apos;s free
                       </Link>
-                      <Link to="/login" className="erp-btn-secondary px-8 py-3 text-base">
+                      <Link to="/login" className="erp-btn-secondary px-10 py-4 text-lg hover:shadow-md transition-shadow">
                         Sign in
                       </Link>
                     </>
                   )}
                 </div>
-                <p className="font-script text-xl sm:text-2xl text-slate-600 dark:text-slate-300" style={{ fontFamily: "'Caveat', cursive" }}>
+                <p className="font-script text-2xl sm:text-3xl text-slate-600 dark:text-slate-300" style={{ fontFamily: "'Caveat', cursive" }}>
                   Free for all features
                 </p>
               </div>
-            </div>
-            {/* Image fills right L-shaped space - extends to viewport edge */}
-            <div className="order-1 lg:order-2 lg:flex-1 lg:min-w-[45%] xl:min-w-[50%] flex items-center justify-center lg:justify-end pt-8 lg:pt-0 lg:pl-0">
-              <div className="relative w-full h-[280px] sm:h-[340px] md:h-[400px] lg:h-[calc(100vh-2rem)] lg:min-h-[500px] flex items-center justify-end">
-                <div className="relative group h-full flex items-center">
-                  <div className="absolute -inset-2 lg:-inset-4 bg-gradient-to-r from-sky-400/20 to-sky-600/30 dark:from-sky-500/20 dark:to-sky-700/30 rounded-2xl blur-xl" />
-                  <div className="relative h-full flex items-center pr-0 lg:pr-8 xl:pr-12">
+              <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+                <div className="relative group">
+                  <div className="absolute -inset-2 bg-gradient-to-r from-sky-400 to-sky-600 dark:from-sky-500 dark:to-sky-700 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity" />
+                  <div className="relative bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-4 sm:p-5 rounded-3xl shadow-2xl border border-slate-200/80 dark:border-slate-600/50 ring-1 ring-slate-900/5 dark:ring-white/5">
                     <img
                       src="/industry-bg.png"
                       alt="Business management dashboard"
-                      className="h-full w-auto max-w-none object-contain object-right rounded-l-2xl lg:rounded-l-3xl shadow-2xl border-l border-slate-200/80 dark:border-slate-600/50"
+                      className="max-h-[400px] sm:max-h-[460px] md:max-h-[520px] lg:max-h-[580px] xl:max-h-[640px] 2xl:max-h-[700px] w-auto object-contain rounded-2xl"
                     />
                   </div>
                 </div>
