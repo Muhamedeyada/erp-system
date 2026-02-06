@@ -7,15 +7,17 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { ModulesModule } from './modules/modules.module';
-import { AccountsModule } from './accounting/accounts/accounts.module';
-import { JournalEntriesModule } from './accounting/journal-entries/journal-entries.module';
-import { InvoicesModule } from './accounting/invoices/invoices.module';
-import { PaymentsModule } from './accounting/payments/payments.module';
-import { ReportsModule } from './accounting/reports/reports.module';
+import { BusinessModulesModule } from './business-modules/business-modules.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
-  imports: [PrismaModule, AuthModule, CommonModule, ModulesModule, AccountsModule, JournalEntriesModule, InvoicesModule, PaymentsModule, ReportsModule],
+  imports: [
+    PrismaModule,
+    AuthModule,
+    CommonModule,
+    ModulesModule,
+    BusinessModulesModule,
+  ],
   controllers: [AppController, RootController],
   providers: [
     AppService,

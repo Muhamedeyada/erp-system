@@ -83,25 +83,31 @@ export class AuthService {
         },
       });
 
-      await (tx as any)['module'].upsert({
-        where: { code: 'ACCOUNTING' },
-        update: {},
-        create: {
-          code: 'ACCOUNTING',
-          name: 'Accounting',
-          description: 'General ledger, journal entries, invoicing, and payments',
-          isActive: true,
-        },
-      });
+      const defaultModuleCodes = (process.env.DEFAULT_MODULES ?? 'ACCOUNTING')
+        .split(',')
+        .map((c) => c.trim().toUpperCase())
+        .filter(Boolean);
 
-      await tx.tenantModule.create({
-        data: {
-          tenantId: tenant.id,
-          moduleCode: 'ACCOUNTING',
-          isEnabled: true,
-          enabledAt: new Date(),
-        },
-      });
+      for (const code of defaultModuleCodes) {
+        await (tx as any)['module'].upsert({
+          where: { code },
+          update: {},
+          create: {
+            code,
+            name: code,
+            description: null,
+            isActive: true,
+          },
+        });
+        await tx.tenantModule.create({
+          data: {
+            tenantId: tenant.id,
+            moduleCode: code,
+            isEnabled: true,
+            enabledAt: new Date(),
+          },
+        });
+      }
 
       const user = await tx.user.create({
         data: {
@@ -121,20 +127,22 @@ export class AuthService {
         },
       });
 
-      const accountIdByCode: Record<string, string> = {};
-      for (const acc of CHART_OF_ACCOUNTS) {
-        const created = await tx.account.create({
-          data: {
-            tenantId: tenant.id,
-            code: acc.code,
-            name: acc.name,
-            type: acc.type,
-            parentId: acc.parentCode
-              ? accountIdByCode[acc.parentCode]
-              : undefined,
-          },
-        });
-        accountIdByCode[acc.code] = created.id;
+      if (defaultModuleCodes.includes('ACCOUNTING')) {
+        const accountIdByCode: Record<string, string> = {};
+        for (const acc of CHART_OF_ACCOUNTS) {
+          const created = await tx.account.create({
+            data: {
+              tenantId: tenant.id,
+              code: acc.code,
+              name: acc.name,
+              type: acc.type,
+              parentId: acc.parentCode
+                ? accountIdByCode[acc.parentCode]
+                : undefined,
+            },
+          });
+          accountIdByCode[acc.code] = created.id;
+        }
       }
 
       return { tenant, user };

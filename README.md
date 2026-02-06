@@ -28,7 +28,7 @@ npm install
 cp .env.example .env
 ```
 
-Set in `.env`: `DATABASE_URL`, `JWT_SECRET`. Optionally `PORT` (default 3001) and `FRONTEND_URL` (e.g. http://localhost:5173) for CORS.
+Set in `.env`: `DATABASE_URL`, `JWT_SECRET`. Optionally `PORT` (default 3001), `FRONTEND_URL` (e.g. http://localhost:5173) for CORS, and `DEFAULT_MODULES` (comma-separated module codes to enable for new companies, default `ACCOUNTING`).
 
 ```bash
 npx prisma migrate dev
@@ -56,7 +56,7 @@ App: http://localhost:5173. Register a company, log in, use the dashboard and ac
 
 ## Project layout
 
-- `backend/` – NestJS app. `prisma/` has schema, migrations, seed. `src/` has auth, accounting (accounts, journal entries, invoices, payments, reports), modules, common (guards, pipes, filters, middleware).
+- `backend/` – NestJS app. `prisma/` has schema, migrations, seed. `src/` has auth, common (guards, pipes, filters, middleware), modules (module registry), **business-modules** (aggregate of feature modules: accounting, etc.). To add a new business module (e.g. HR): add it to `business-modules.module.ts` and register the module code in the DB (seed/migration); optionally set `DEFAULT_MODULES` so new tenants get it.
 - `frontend/` – React app. `src/` has components, pages (dashboard, accounting pages, login, register), services (API client), types, contexts (auth, dark mode).
 
 ## Scripts
