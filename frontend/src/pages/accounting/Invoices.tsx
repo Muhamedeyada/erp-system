@@ -18,11 +18,11 @@ const STATUS_OPTIONS: { value: '' | InvoiceStatus; label: string }[] = [
 
 function StatusBadge({ status }: { status: InvoiceStatus }) {
   const styles: Record<InvoiceStatus, string> = {
-    PAID: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-    PARTIALLY_PAID: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-    SENT: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+    PAID: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400',
+    PARTIALLY_PAID: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400',
+    SENT: 'bg-erp-primary-100 text-erp-primary-800 dark:bg-erp-primary-900/30 dark:text-erp-primary-400',
     OVERDUE: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
-    DRAFT: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
+    DRAFT: 'bg-erp-slate-100 text-erp-slate-800 dark:bg-erp-slate-700 dark:text-erp-slate-300',
     CANCELLED: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 line-through',
   };
   return (
@@ -101,11 +101,11 @@ export function Invoices() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Invoices</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-white tracking-tight">Invoices</h1>
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium"
+          className="erp-btn-primary shrink-0"
         >
           <Plus className="w-4 h-4" /> Create Invoice
         </button>
@@ -115,7 +115,7 @@ export function Invoices() {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value as '' | InvoiceStatus)}
-          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm"
+          className="erp-input py-2 text-sm max-w-[140px] sm:max-w-none"
         >
           {STATUS_OPTIONS.map((o) => (
             <option key={o.value || 'all'} value={o.value}>
@@ -128,89 +128,88 @@ export function Invoices() {
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
           placeholder="From"
-          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm"
+          className="erp-input py-2 text-sm"
         />
         <input
           type="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
           placeholder="To"
-          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm"
+          className="erp-input py-2 text-sm"
         />
-        <button
-          onClick={handleFilter}
-          className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 font-medium"
-        >
+        <button onClick={handleFilter} className="erp-btn-secondary">
           Filter
         </button>
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-gray-500 dark:text-gray-400">Loading...</div>
+        <div className="py-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
       ) : (
         <>
-          <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50 dark:bg-gray-700/50">
-                <tr>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">#</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Customer</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Date</th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Amount</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {invoices.length === 0 ? (
+          <div className="erp-card overflow-hidden">
+            <div className="erp-table-wrapper">
+              <table className="w-full text-sm">
+                <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">
                   <tr>
-                    <td colSpan={5} className="py-8 text-center text-gray-500 dark:text-gray-400">
-                      No invoices found.
-                    </td>
+                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">#</th>
+                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Customer</th>
+                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Date</th>
+                    <th className="text-right py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Amount</th>
+                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Status</th>
                   </tr>
-                ) : (
-                  invoices.map((inv) => (
-                    <tr
-                      key={inv.id}
-                      onClick={() => fetchInvoiceForView(inv.id)}
-                      className="border-t border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer"
-                    >
-                      <td className="py-3 px-4 font-mono text-gray-900 dark:text-gray-100">
-                        {inv.invoiceNumber}
-                      </td>
-                      <td className="py-3 px-4 text-gray-700 dark:text-gray-300">{inv.customerName}</td>
-                      <td className="py-3 px-4 text-gray-700 dark:text-gray-300">
-                        {inv.date ? new Date(inv.date).toLocaleDateString() : '-'}
-                      </td>
-                      <td className="py-3 px-4 text-right font-mono text-gray-900 dark:text-gray-100">
-                        {Number(inv.total).toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                      </td>
-                      <td className="py-3 px-4">
-                        <StatusBadge status={inv.status} />
+                </thead>
+                <tbody>
+                  {invoices.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="py-8 text-center text-erp-slate-500 dark:text-erp-slate-400">
+                        No invoices found.
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  ) : (
+                    invoices.map((inv) => (
+                      <tr
+                        key={inv.id}
+                        onClick={() => fetchInvoiceForView(inv.id)}
+                        className="border-t border-erp-slate-200 dark:border-erp-slate-600 hover:bg-erp-slate-50 dark:hover:bg-erp-slate-700/50 cursor-pointer transition-colors"
+                      >
+                        <td className="py-3 px-4 font-mono text-erp-slate-900 dark:text-erp-slate-100 font-medium">
+                          {inv.invoiceNumber}
+                        </td>
+                        <td className="py-3 px-4 text-erp-slate-700 dark:text-erp-slate-300">{inv.customerName}</td>
+                        <td className="py-3 px-4 text-erp-slate-700 dark:text-erp-slate-300">
+                          {inv.date ? new Date(inv.date).toLocaleDateString() : '-'}
+                        </td>
+                        <td className="py-3 px-4 text-right font-mono text-erp-slate-900 dark:text-erp-slate-100">
+                          {Number(inv.total).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </td>
+                        <td className="py-3 px-4">
+                          <StatusBadge status={inv.status} />
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           {totalPages > 1 && (
-            <div className="flex items-center justify-between mt-4">
-              <span className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-4">
+              <span className="text-sm text-erp-slate-600 dark:text-erp-slate-400">
                 Page {page} of {totalPages} ({total} total)
               </span>
               <div className="flex gap-2">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page <= 1}
-                  className="px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 disabled:opacity-50 text-gray-700 dark:text-gray-300"
+                  className="erp-btn-secondary py-1.5 px-3 text-sm disabled:opacity-50"
                 >
                   Previous
                 </button>
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page >= totalPages}
-                  className="px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 disabled:opacity-50 text-gray-700 dark:text-gray-300"
+                  className="erp-btn-secondary py-1.5 px-3 text-sm disabled:opacity-50"
                 >
                   Next
                 </button>

@@ -61,11 +61,11 @@ export function Payments() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Payments</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 tracking-tight">Payments</h1>
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium"
+          className="erp-btn-primary shrink-0"
         >
           <Plus className="w-4 h-4" /> Add Payment
         </button>
@@ -75,7 +75,7 @@ export function Payments() {
         <select
           value={filterInvoiceId}
           onChange={(e) => setFilterInvoiceId(e.target.value)}
-          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm"
+          className="erp-input py-2 text-sm max-w-[200px] sm:max-w-none"
         >
           <option value="">All invoices</option>
           {invoices.map((inv) => (
@@ -87,7 +87,7 @@ export function Payments() {
         <select
           value={filterMethod}
           onChange={(e) => setFilterMethod(e.target.value as '' | PaymentMethod)}
-          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm"
+          className="erp-input py-2 text-sm max-w-[140px] sm:max-w-none"
         >
           {METHOD_OPTIONS.map((o) => (
             <option key={o.value || 'all'} value={o.value}>
@@ -98,50 +98,52 @@ export function Payments() {
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-gray-500 dark:text-gray-400">Loading...</div>
+        <div className="py-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
       ) : (
-        <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 dark:bg-gray-700/50">
-              <tr>
-                <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Date</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Invoice</th>
-                <th className="text-right py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Amount</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Method</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Reference</th>
-              </tr>
-            </thead>
-            <tbody>
-              {payments.length === 0 ? (
+        <div className="erp-card overflow-hidden">
+          <div className="erp-table-wrapper">
+            <table className="w-full text-sm">
+              <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-gray-500 dark:text-gray-400">
-                    No payments found.
-                  </td>
+                  <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Date</th>
+                  <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Invoice</th>
+                  <th className="text-right py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Amount</th>
+                  <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Method</th>
+                  <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Reference</th>
                 </tr>
-              ) : (
-                payments.map((p) => (
-                  <tr
-                    key={p.id}
-                    className="border-t border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/50"
-                  >
-                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300">
-                      {p.paymentDate
-                        ? new Date(p.paymentDate).toLocaleDateString()
-                        : '-'}
+              </thead>
+              <tbody>
+                {payments.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="py-8 text-center text-erp-slate-500 dark:text-erp-slate-400">
+                      No payments found.
                     </td>
-                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300">
-                      {p.invoice?.invoiceNumber ?? '-'}
-                    </td>
-                    <td className="py-3 px-4 text-right font-mono text-gray-900 dark:text-gray-100">
-                      {Number(p.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                    </td>
-                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300">{p.method}</td>
-                    <td className="py-3 px-4 text-gray-600 dark:text-gray-400">{p.reference || '-'}</td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  payments.map((p) => (
+                    <tr
+                      key={p.id}
+                      className="border-t border-erp-slate-200 dark:border-erp-slate-600 hover:bg-erp-slate-50 dark:hover:bg-erp-slate-700/50 transition-colors"
+                    >
+                      <td className="py-3 px-4 text-erp-slate-700 dark:text-erp-slate-300">
+                        {p.paymentDate
+                          ? new Date(p.paymentDate).toLocaleDateString()
+                          : '-'}
+                      </td>
+                      <td className="py-3 px-4 text-erp-slate-700 dark:text-erp-slate-300 font-medium">
+                        {p.invoice?.invoiceNumber ?? '-'}
+                      </td>
+                      <td className="py-3 px-4 text-right font-mono text-erp-slate-900 dark:text-erp-slate-100">
+                        {Number(p.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      </td>
+                      <td className="py-3 px-4 text-erp-slate-700 dark:text-erp-slate-300">{p.method}</td>
+                      <td className="py-3 px-4 text-erp-slate-600 dark:text-erp-slate-400">{p.reference || '-'}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 

@@ -68,85 +68,87 @@ export function JournalEntries() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Journal Entries</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 tracking-tight">Journal Entries</h1>
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium"
+          className="erp-btn-primary shrink-0"
         >
           <Plus className="w-4 h-4" /> Create
         </button>
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-gray-500 dark:text-gray-400">Loading...</div>
+        <div className="py-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
       ) : (
         <>
-          <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50 dark:bg-gray-700/50">
-                <tr>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Entry #</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Date</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Description</th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-700 dark:text-gray-300">Amount</th>
-                  <th className="w-20" />
-                </tr>
-              </thead>
-              <tbody>
-                {entries.length === 0 ? (
+          <div className="erp-card overflow-hidden">
+            <div className="erp-table-wrapper">
+              <table className="w-full text-sm">
+                <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">
                   <tr>
-                    <td colSpan={5} className="py-8 text-center text-gray-500 dark:text-gray-400">
-                      No journal entries yet. Create one to get started.
-                    </td>
+                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Entry #</th>
+                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Date</th>
+                    <th className="text-left py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Description</th>
+                    <th className="text-right py-3 px-4 font-medium text-erp-slate-700 dark:text-erp-slate-300">Amount</th>
+                    <th className="w-20" />
                   </tr>
-                ) : (
-                  entries.map((entry) => (
-                    <tr
-                      key={entry.id}
-                      onClick={() => setViewEntry(entry)}
-                      className="border-t border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer"
-                    >
-                      <td className="py-3 px-4 font-mono text-gray-900 dark:text-gray-100">{entry.entryNumber}</td>
-                      <td className="py-3 px-4 text-gray-700 dark:text-gray-300">
-                        {entry.date ? new Date(entry.date).toLocaleDateString() : '-'}
-                      </td>
-                      <td className="py-3 px-4 text-gray-700 dark:text-gray-300">{entry.description || '-'}</td>
-                      <td className="py-3 px-4 text-right font-mono text-gray-900 dark:text-gray-100">
-                        {getEntryAmount(entry).toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                      </td>
-                      <td className="py-3 px-4">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); setViewEntry(entry); }}
-                          className="p-1.5 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 rounded"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
+                </thead>
+                <tbody>
+                  {entries.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="py-8 text-center text-erp-slate-500 dark:text-erp-slate-400">
+                        No journal entries yet. Create one to get started.
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  ) : (
+                    entries.map((entry) => (
+                      <tr
+                        key={entry.id}
+                        onClick={() => setViewEntry(entry)}
+                        className="border-t border-erp-slate-200 dark:border-erp-slate-600 hover:bg-erp-slate-50 dark:hover:bg-erp-slate-700/50 cursor-pointer transition-colors"
+                      >
+                        <td className="py-3 px-4 font-mono text-erp-slate-900 dark:text-erp-slate-100 font-medium">{entry.entryNumber}</td>
+                        <td className="py-3 px-4 text-erp-slate-700 dark:text-erp-slate-300">
+                          {entry.date ? new Date(entry.date).toLocaleDateString() : '-'}
+                        </td>
+                        <td className="py-3 px-4 text-erp-slate-700 dark:text-erp-slate-300">{entry.description || '-'}</td>
+                        <td className="py-3 px-4 text-right font-mono text-erp-slate-900 dark:text-erp-slate-100">
+                          {getEntryAmount(entry).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </td>
+                        <td className="py-3 px-4">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setViewEntry(entry); }}
+                            className="p-1.5 text-erp-slate-500 hover:text-erp-primary-600 dark:hover:text-erp-primary-400 rounded transition-colors"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           {totalPages > 1 && (
-            <div className="flex items-center justify-between mt-4">
-              <span className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-4">
+              <span className="text-sm text-erp-slate-600 dark:text-erp-slate-400">
                 Page {page} of {totalPages} ({total} total)
               </span>
               <div className="flex gap-2">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page <= 1}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 disabled:opacity-50 text-gray-700 dark:text-gray-300"
+                  className="erp-btn-secondary py-1.5 px-3 text-sm disabled:opacity-50"
                 >
                   <ChevronLeft className="w-4 h-4" /> Previous
                 </button>
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page >= totalPages}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 disabled:opacity-50 text-gray-700 dark:text-gray-300"
+                  className="erp-btn-secondary py-1.5 px-3 text-sm disabled:opacity-50"
                 >
                   Next <ChevronRight className="w-4 h-4" />
                 </button>
@@ -177,51 +179,51 @@ function DetailsModal({ entry, onClose }: { entry: JournalEntry; onClose: () => 
   const totalCredit = lines.reduce((s, l) => s + (l.credit || 0), 0);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 overflow-y-auto" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto" onClick={onClose}>
       <div
-        className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-2xl my-8"
+        className="erp-card w-full max-w-2xl my-8 shadow-erp-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <div className="p-4 sm:p-6 border-b border-erp-slate-200 dark:border-erp-slate-700 flex items-center justify-between">
+          <h2 className="text-base sm:text-lg font-semibold text-erp-slate-900 dark:text-erp-slate-100">
             Journal Entry {entry.entryNumber}
           </h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+          <button onClick={onClose} className="p-2 text-erp-slate-500 hover:text-erp-slate-700 dark:hover:text-erp-slate-300 rounded-lg hover:bg-erp-slate-100 dark:hover:bg-erp-slate-700 transition-colors">
             ✕
           </button>
         </div>
-        <div className="p-6 space-y-4">
-          <div className="flex gap-6 text-sm">
+        <div className="p-4 sm:p-6 space-y-4">
+          <div className="flex flex-wrap gap-4 sm:gap-6 text-sm">
             <div>
-              <span className="text-gray-500 dark:text-gray-400">Date: </span>
-              <span className="text-gray-900 dark:text-gray-100">
+              <span className="text-erp-slate-500 dark:text-erp-slate-400">Date: </span>
+              <span className="text-erp-slate-900 dark:text-erp-slate-100 font-medium">
                 {entry.date ? new Date(entry.date).toLocaleDateString() : '-'}
               </span>
             </div>
             {entry.reference && (
               <div>
-                <span className="text-gray-500 dark:text-gray-400">Reference: </span>
-                <span className="text-gray-900 dark:text-gray-100">{entry.reference}</span>
+                <span className="text-erp-slate-500 dark:text-erp-slate-400">Reference: </span>
+                <span className="text-erp-slate-900 dark:text-erp-slate-100 font-medium">{entry.reference}</span>
               </div>
             )}
           </div>
           {entry.description && (
-            <p className="text-gray-700 dark:text-gray-300">{entry.description}</p>
+            <p className="text-erp-slate-700 dark:text-erp-slate-300">{entry.description}</p>
           )}
-          <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
+          <div className="erp-table-wrapper overflow-hidden rounded-lg border border-erp-slate-200 dark:border-erp-slate-600">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 dark:bg-gray-700/50">
+              <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">
                 <tr>
-                  <th className="text-left py-2 px-3 font-medium text-gray-700 dark:text-gray-300">Account</th>
-                  <th className="text-right py-2 px-3 font-medium text-gray-700 dark:text-gray-300 w-28">Debit</th>
-                  <th className="text-right py-2 px-3 font-medium text-gray-700 dark:text-gray-300 w-28">Credit</th>
-                  <th className="text-left py-2 px-3 font-medium text-gray-700 dark:text-gray-300">Description</th>
+                  <th className="text-left py-2 px-3 font-medium text-erp-slate-700 dark:text-erp-slate-300">Account</th>
+                  <th className="text-right py-2 px-3 font-medium text-erp-slate-700 dark:text-erp-slate-300 w-28">Debit</th>
+                  <th className="text-right py-2 px-3 font-medium text-erp-slate-700 dark:text-erp-slate-300 w-28">Credit</th>
+                  <th className="text-left py-2 px-3 font-medium text-erp-slate-700 dark:text-erp-slate-300">Description</th>
                 </tr>
               </thead>
               <tbody>
                 {lines.map((line, i) => (
-                  <tr key={line.id ?? i} className="border-t border-gray-200 dark:border-gray-600">
-                    <td className="py-2 px-3 text-gray-900 dark:text-gray-100">
+                  <tr key={line.id ?? i} className="border-t border-erp-slate-200 dark:border-erp-slate-600">
+                    <td className="py-2 px-3 text-erp-slate-900 dark:text-erp-slate-100 font-medium">
                       {line.account?.code} - {line.account?.name ?? '—'}
                     </td>
                     <td className="py-2 px-3 text-right font-mono">
@@ -230,13 +232,13 @@ function DetailsModal({ entry, onClose }: { entry: JournalEntry; onClose: () => 
                     <td className="py-2 px-3 text-right font-mono">
                       {(line.credit || 0) > 0 ? (line.credit as number).toLocaleString(undefined, { minimumFractionDigits: 2 }) : ''}
                     </td>
-                    <td className="py-2 px-3 text-gray-600 dark:text-gray-400">{line.description || '-'}</td>
+                    <td className="py-2 px-3 text-erp-slate-600 dark:text-erp-slate-400">{line.description || '-'}</td>
                   </tr>
                 ))}
               </tbody>
-              <tfoot className="bg-gray-50 dark:bg-gray-700/50 font-medium">
+              <tfoot className="bg-erp-slate-50 dark:bg-erp-slate-700/50 font-medium">
                 <tr>
-                  <td className="py-2 px-3">Total</td>
+                  <td className="py-2 px-3 text-erp-slate-900 dark:text-erp-slate-100">Total</td>
                   <td className="py-2 px-3 text-right font-mono">{totalDebit.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
                   <td className="py-2 px-3 text-right font-mono">{totalCredit.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
                   <td />
@@ -245,10 +247,7 @@ function DetailsModal({ entry, onClose }: { entry: JournalEntry; onClose: () => 
             </table>
           </div>
           <div className="flex justify-end pt-2">
-            <button
-              onClick={onClose}
-              className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300"
-            >
+            <button onClick={onClose} className="erp-btn-secondary">
               Close
             </button>
           </div>

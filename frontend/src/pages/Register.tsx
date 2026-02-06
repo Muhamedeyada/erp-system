@@ -59,14 +59,16 @@ export function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center bg-erp-slate-50 dark:bg-erp-slate-900 px-4 py-8">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">ERP System</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">Register your company</p>
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-erp-slate-900 dark:text-white tracking-tight">
+            ERP System
+          </h1>
+          <p className="mt-2 text-erp-slate-600 dark:text-erp-slate-400">Register your company</p>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+        <div className="erp-card p-6 sm:p-8 shadow-erp-md">
           {error && (
             <div className="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
               <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
@@ -75,7 +77,7 @@ export function Register() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="companyName" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
                 Company Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -88,8 +90,8 @@ export function Register() {
                 }}
                 required
                 placeholder="Acme Inc"
-                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
-                  fieldErrors.companyName ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                className={`erp-input ${
+                  fieldErrors.companyName ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''
                 }`}
               />
               {fieldErrors.companyName && (
@@ -98,7 +100,7 @@ export function Register() {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
                 Email <span className="text-red-500">*</span>
               </label>
               <input
@@ -112,8 +114,8 @@ export function Register() {
                 required
                 autoComplete="email"
                 placeholder="admin@acme.com"
-                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
-                  fieldErrors.email ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                className={`erp-input ${
+                  fieldErrors.email ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''
                 }`}
               />
               {fieldErrors.email && (
@@ -122,7 +124,7 @@ export function Register() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
                 Password <span className="text-red-500">*</span>
               </label>
               <input
@@ -137,8 +139,8 @@ export function Register() {
                 minLength={6}
                 autoComplete="new-password"
                 placeholder="Min 6 characters"
-                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
-                  fieldErrors.password ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                className={`erp-input ${
+                  fieldErrors.password ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''
                 }`}
               />
               {fieldErrors.password && (
@@ -147,8 +149,8 @@ export function Register() {
             </div>
 
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Your Name <span className="text-gray-400 text-xs">(optional)</span>
+              <label htmlFor="name" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
+                Your Name <span className="text-erp-slate-400 text-xs">(optional)</span>
               </label>
               <input
                 id="name"
@@ -156,14 +158,14 @@ export function Register() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="John Doe"
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                className="erp-input"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="erp-btn-primary w-full py-2.5"
             >
               {loading ? (
                 <>
@@ -190,9 +192,9 @@ export function Register() {
               )}
             </button>
 
-            <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-center text-sm text-erp-slate-600 dark:text-erp-slate-400">
               Already have an account?{' '}
-              <Link to="/login" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
+              <Link to="/login" className="text-erp-primary-600 dark:text-erp-primary-400 hover:underline font-medium">
                 Sign in
               </Link>
             </p>

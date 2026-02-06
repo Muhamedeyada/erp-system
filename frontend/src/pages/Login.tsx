@@ -60,14 +60,16 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center bg-erp-slate-50 dark:bg-erp-slate-900 px-4 py-8">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">ERP System</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">Sign in to your account</p>
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-erp-slate-900 dark:text-white tracking-tight">
+            ERP System
+          </h1>
+          <p className="mt-2 text-erp-slate-600 dark:text-erp-slate-400">Sign in to your account</p>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+        <div className="erp-card p-6 sm:p-8 shadow-erp-md">
           {error && (
             <div className="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
               <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
@@ -77,14 +79,14 @@ export function Login() {
           <button
             type="button"
             onClick={handleDemoClick}
-            className="w-full mb-6 py-2.5 px-4 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium transition-colors text-sm"
+            className="w-full mb-6 py-2.5 px-4 rounded-lg bg-erp-slate-100 dark:bg-erp-slate-700 hover:bg-erp-slate-200 dark:hover:bg-erp-slate-600 text-erp-slate-700 dark:text-erp-slate-300 font-medium transition-colors text-sm"
           >
             Use Demo Account
           </button>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
                 Email
               </label>
               <input
@@ -98,8 +100,8 @@ export function Login() {
                 required
                 autoComplete="email"
                 placeholder="you@example.com"
-                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
-                  fieldErrors.email ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                className={`erp-input ${
+                  fieldErrors.email ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''
                 }`}
               />
               {fieldErrors.email && (
@@ -108,7 +110,7 @@ export function Login() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-2">
                 Password
               </label>
               <input
@@ -122,8 +124,8 @@ export function Login() {
                 required
                 minLength={6}
                 autoComplete="current-password"
-                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
-                  fieldErrors.password ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                className={`erp-input ${
+                  fieldErrors.password ? 'border-red-500 dark:border-red-500 focus:ring-red-500' : ''
                 }`}
               />
               {fieldErrors.password && (
@@ -134,7 +136,7 @@ export function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="erp-btn-primary w-full py-2.5"
             >
               {loading ? (
                 <>
@@ -161,9 +163,9 @@ export function Login() {
               )}
             </button>
 
-            <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-center text-sm text-erp-slate-600 dark:text-erp-slate-400">
               Don&apos;t have an account?{' '}
-              <Link to="/register" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
+              <Link to="/register" className="text-erp-primary-600 dark:text-erp-primary-400 hover:underline font-medium">
                 Register company
               </Link>
             </p>

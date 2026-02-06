@@ -74,47 +74,47 @@ export function AccountForm({ account, accounts, onClose, onSubmit }: AccountFor
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md"
+        className="erp-card w-full max-w-md shadow-erp-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <div className="p-4 sm:p-6 border-b border-erp-slate-200 dark:border-erp-slate-700">
+          <h2 className="text-lg font-semibold text-erp-slate-900 dark:text-erp-slate-100">
             {isEdit ? 'Edit Account' : 'Add Account'}
           </h2>
         </div>
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4">
           {error && (
             <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm">
               {error}
             </div>
           )}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Code</label>
+            <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">Code</label>
             <input
               type="text"
               value={code}
               onChange={(e) => setCode(e.target.value)}
               disabled={isEdit}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              className="erp-input disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="1101"
             />
-            {isEdit && <p className="mt-1 text-xs text-gray-500">Code cannot be changed</p>}
+            {isEdit && <p className="mt-1 text-xs text-erp-slate-500">Code cannot be changed</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+            <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
+              className="erp-input"
               placeholder="Cash"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type</label>
+            <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">Type</label>
             <select
               value={type}
               onChange={(e) => {
@@ -122,21 +122,21 @@ export function AccountForm({ account, accounts, onClose, onSubmit }: AccountFor
                 setParentId('');
               }}
               disabled={isEdit}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              className="erp-input disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {ACCOUNT_TYPES.map((t) => (
                 <option key={t} value={t}>{t}</option>
               ))}
             </select>
-            {isEdit && <p className="mt-1 text-xs text-gray-500">Type cannot be changed</p>}
+            {isEdit && <p className="mt-1 text-xs text-erp-slate-500">Type cannot be changed</p>}
           </div>
           {!isEdit && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Parent Account</label>
+              <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">Parent Account</label>
               <select
                 value={parentId}
                 onChange={(e) => setParentId(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
+                className="erp-input"
               >
                 <option value="">None (top level)</option>
                 {parentOptions
@@ -150,17 +150,13 @@ export function AccountForm({ account, accounts, onClose, onSubmit }: AccountFor
             </div>
           )}
           <div className="flex gap-3 pt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-            >
+            <button type="button" onClick={onClose} className="erp-btn-secondary flex-1">
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 py-2 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium"
+              className="erp-btn-primary flex-1 disabled:opacity-50"
             >
               {loading ? 'Saving...' : isEdit ? 'Update' : 'Create'}
             </button>

@@ -9,6 +9,7 @@ import {
   BarChart3,
   LogOut,
   Menu,
+  X,
 } from 'lucide-react';
 import { DarkModeToggle } from './DarkModeToggle';
 import { useState } from 'react';
@@ -31,36 +32,37 @@ export function Layout({ children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
+    <div className="min-h-screen bg-erp-slate-50 dark:bg-erp-slate-900 flex">
+      {/* Sidebar - responsive: drawer on mobile, static on lg+ */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transform transition-transform lg:translate-x-0 ${
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 sm:w-72 bg-white dark:bg-erp-slate-800 border-r border-erp-slate-200 dark:border-erp-slate-700 transform transition-transform duration-200 ease-out lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="flex flex-col h-full">
-          <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <div className="p-4 sm:p-5 border-b border-erp-slate-200 dark:border-erp-slate-700">
+            <h1 className="text-xl font-bold text-erp-slate-900 dark:text-white tracking-tight">
               ERP System
             </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+            <p className="text-sm text-erp-slate-500 dark:text-erp-slate-400 truncate mt-0.5">
               {user?.tenant?.name}
             </p>
           </div>
-          <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+          <nav className="flex-1 p-3 sm:p-4 space-y-1 overflow-y-auto">
             {navItems.map(({ to, icon: Icon, label }) => (
               <NavLink
                 key={to}
                 to={to}
                 onClick={() => setSidebarOpen(false)}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                  `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-sm font-medium ${
                     isActive
-                      ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                      ? 'bg-erp-primary-50 dark:bg-erp-primary-900/20 text-erp-primary-700 dark:text-erp-primary-300'
+                      : 'text-erp-slate-700 dark:text-erp-slate-300 hover:bg-erp-slate-100 dark:hover:bg-erp-slate-700/50'
                   }`
                 }
               >
-                <Icon className="w-5 h-5 shrink-0" />
+                <Icon className="w-5 h-5 shrink-0 opacity-80" />
                 <span>{label}</span>
               </NavLink>
             ))}
@@ -69,40 +71,41 @@ export function Layout({ children }: LayoutProps) {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <header className="sticky top-0 z-30 flex items-center justify-between h-14 sm:h-16 px-4 sm:px-6 bg-white dark:bg-erp-slate-800 border-b border-erp-slate-200 dark:border-erp-slate-700">
           <button
             onClick={() => setSidebarOpen((s) => !s)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-erp-slate-100 dark:hover:bg-erp-slate-700 text-erp-slate-600 dark:text-erp-slate-400"
+            aria-label={sidebarOpen ? 'Close menu' : 'Open menu'}
           >
-            <Menu className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+            {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
           <div className="flex-1 lg:flex-none" />
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <DarkModeToggle />
             <div className="hidden sm:block text-right">
-              <p className="text-sm font-medium text-gray-900 dark:text-white">
+              <p className="text-sm font-medium text-erp-slate-900 dark:text-white truncate max-w-[140px]">
                 {user?.name || user?.email}
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">{user?.role}</p>
+              <p className="text-xs text-erp-slate-500 dark:text-erp-slate-400">{user?.role}</p>
             </div>
             <button
               onClick={logout}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 text-sm font-medium transition-colors"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-4 h-4 shrink-0" />
               <span className="hidden sm:inline">Logout</span>
             </button>
           </div>
         </header>
 
-        <main className="flex-1 p-4 lg:p-6 overflow-auto">
+        <main className="flex-1 p-4 sm:p-6 overflow-auto">
           {children}
         </main>
       </div>
 
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 lg:hidden"
           onClick={() => setSidebarOpen(false)}
           aria-hidden="true"
         />

@@ -1,3 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --erp-primary: 2 132 199;
+    --erp-primary-hover: 3 105 161;
+    --erp-bg: 248 250 252;
+    --erp-surface: 255 255 255;
+    --erp-border: 226 232 240;
+    --erp-text: 15 23 42;
+    --erp-text-muted: 100 116 139;
+  }
+
+  .dark {
+    --erp-primary: 56 189 248;
+    --erp-primary-hover: 125 211 252;
+    --erp-bg: 15 23 42;
+    --erp-surface: 30 41 59;
+    --erp-border: 51 65 85;
+    --erp-text: 248 250 252;
+    --erp-text-muted: 148 163 184;
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans;
+  }
+
+  /* ERP-style focus ring */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-sky-500 ring-offset-2 dark:ring-offset-slate-900;
+  }
+
+  /* Responsive typography */
+  h1 { @apply text-2xl sm:text-3xl font-bold tracking-tight; }
+  h2 { @apply text-lg sm:text-xl font-semibold; }
+}
+
+@layer components {
+  /* ERP card */
+  .erp-card {
+    @apply bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm;
+  }
+
+  /* ERP primary button */
+  .erp-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium
+           bg-sky-600 hover:bg-sky-700 dark:bg-sky-500 dark:hover:bg-sky-400
+           text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* ERP secondary button */
+  .erp-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium
+           border border-slate-300 dark:border-slate-600
+           bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700
+           text-slate-700 dark:text-slate-300 transition-colors;
+  }
+
+  /* ERP input */
+  .erp-input {
+    @apply w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600
+           bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100
+           placeholder:text-slate-400 dark:placeholder:text-slate-500
+           focus:ring-2 focus:ring-sky-500 focus:border-transparent
+           transition-colors;
+  }
+}
+
+/* Responsive table scroll */
+.erp-table-wrapper {
+  @apply overflow-x-auto -mx-4 sm:mx-0;
+}
+
+.erp-table-wrapper table {
+  @apply min-w-[640px] sm:min-w-0;
+}
+
+/* Landing page - gradient & wave background */
+.landing-hero-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-hero-bg::before {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  right: -10%;
+  height: 60%;
+  background: linear-gradient(135deg, rgba(226, 232, 240, 0.8) 0%, rgba(203, 213, 225, 0.5) 25%, rgba(148, 163, 184, 0.3) 50%, rgba(100, 116, 139, 0.15) 100%);
+  border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+  transform: scaleX(1.2);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dark .landing-hero-bg::before {
+  background: linear-gradient(135deg, rgba(51, 65, 85, 0.6) 0%, rgba(30, 41, 59, 0.4) 50%, rgba(15, 23, 42, 0.2) 100%);
+}
+
+/* Text highlight - marker style */
+.text-highlight-amber {
+  background: linear-gradient(180deg, transparent 55%, rgba(251, 191, 36, 0.5) 55%);
+  padding: 0 0.1em;
+}
+
+.text-highlight-blue {
+  background: linear-gradient(180deg, transparent 60%, rgba(56, 189, 248, 0.4) 60%);
+  padding: 0 0.1em;
+}

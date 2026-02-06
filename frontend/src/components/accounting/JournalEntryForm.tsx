@@ -61,8 +61,8 @@ export function JournalEntryForm({ accounts, onClose, onSubmit }: JournalEntryFo
     setLines((prev) => {
       const next = [...prev];
       next[index] = { ...next[index], [field]: value };
-      if (field === 'debit' && value > 0) next[index].credit = 0;
-      if (field === 'credit' && value > 0) next[index].debit = 0;
+      if (field === 'debit' && Number(value) > 0) next[index].credit = 0;
+      if (field === 'credit' && Number(value) > 0) next[index].debit = 0;
       return next;
     });
   };
@@ -108,13 +108,13 @@ export function JournalEntryForm({ accounts, onClose, onSubmit }: JournalEntryFo
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 overflow-y-auto" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto" onClick={onClose}>
       <div
-        className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-3xl my-8"
+        className="erp-card w-full max-w-3xl my-8 shadow-erp-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Create Journal Entry</h2>
+        <div className="p-4 sm:p-6 border-b border-erp-slate-200 dark:border-erp-slate-700">
+          <h2 className="text-lg font-semibold text-erp-slate-900 dark:text-erp-slate-100">Create Journal Entry</h2>
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
@@ -124,68 +124,68 @@ export function JournalEntryForm({ accounts, onClose, onSubmit }: JournalEntryFo
           )}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date</label>
+              <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">Date</label>
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                className="w-full px-4 py-2 erp-input"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Reference</label>
+              <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">Reference</label>
               <input
                 type="text"
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
                 placeholder="INV-001"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                className="w-full px-4 py-2 erp-input"
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+            <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">Description</label>
             <input
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Purchase inventory"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-2 erp-input"
             />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Lines</label>
+              <label className="text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300">Lines</label>
               <button
                 type="button"
                 onClick={addLine}
-                className="flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                className="flex items-center gap-1 text-sm text-erp-primary-600 dark:text-erp-primary-400 hover:underline"
               >
                 <Plus className="w-4 h-4" /> Add
               </button>
             </div>
-            <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
+            <div className="border border-erp-slate-200 dark:border-erp-slate-600 rounded-lg overflow-hidden">
               <table className="w-full text-sm">
-                <thead className="bg-gray-50 dark:bg-gray-700/50">
+                <thead className="bg-erp-slate-50 dark:bg-erp-slate-700/50">
                   <tr>
-                    <th className="text-left py-2 px-3 font-medium text-gray-700 dark:text-gray-300">Account</th>
-                    <th className="text-right py-2 px-3 font-medium text-gray-700 dark:text-gray-300 w-28">Debit</th>
-                    <th className="text-right py-2 px-3 font-medium text-gray-700 dark:text-gray-300 w-28">Credit</th>
-                    <th className="text-left py-2 px-3 font-medium text-gray-700 dark:text-gray-300">Description</th>
+                    <th className="text-left py-2 px-3 font-medium text-erp-slate-700 dark:text-erp-slate-300">Account</th>
+                    <th className="text-right py-2 px-3 font-medium text-erp-slate-700 dark:text-erp-slate-300 w-28">Debit</th>
+                    <th className="text-right py-2 px-3 font-medium text-erp-slate-700 dark:text-erp-slate-300 w-28">Credit</th>
+                    <th className="text-left py-2 px-3 font-medium text-erp-slate-700 dark:text-erp-slate-300">Description</th>
                     <th className="w-10" />
                   </tr>
                 </thead>
                 <tbody>
                   {lines.map((line, i) => (
-                    <tr key={i} className="border-t border-gray-200 dark:border-gray-600">
+                    <tr key={i} className="border-t border-erp-slate-200 dark:border-erp-slate-600">
                       <td className="py-1 px-3">
                         <select
                           value={line.accountId}
                           onChange={(e) => updateLine(i, 'accountId', e.target.value)}
                           required
-                          className="w-full py-1.5 px-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm"
+                          className="w-full py-1.5 px-2 erp-input text-sm py-1.5 px-2"
                         >
                           <option value="">Select account</option>
                           {flatAccounts.map((a) => (
@@ -201,7 +201,7 @@ export function JournalEntryForm({ accounts, onClose, onSubmit }: JournalEntryFo
                           value={line.debit || ''}
                           onChange={(e) => updateLine(i, 'debit', e.target.value ? parseFloat(e.target.value) : 0)}
                           placeholder="0"
-                          className="w-full py-1.5 px-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm text-right"
+                          className="w-full py-1.5 px-2 erp-input text-sm py-1.5 px-2 text-right"
                         />
                       </td>
                       <td className="py-1 px-3">
@@ -212,7 +212,7 @@ export function JournalEntryForm({ accounts, onClose, onSubmit }: JournalEntryFo
                           value={line.credit || ''}
                           onChange={(e) => updateLine(i, 'credit', e.target.value ? parseFloat(e.target.value) : 0)}
                           placeholder="0"
-                          className="w-full py-1.5 px-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm text-right"
+                          className="w-full py-1.5 px-2 erp-input text-sm py-1.5 px-2 text-right"
                         />
                       </td>
                       <td className="py-1 px-3">
@@ -221,7 +221,7 @@ export function JournalEntryForm({ accounts, onClose, onSubmit }: JournalEntryFo
                           value={line.description}
                           onChange={(e) => updateLine(i, 'description', e.target.value)}
                           placeholder=""
-                          className="w-full py-1.5 px-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm"
+                          className="w-full py-1.5 px-2 erp-input text-sm py-1.5 px-2"
                         />
                       </td>
                       <td>
@@ -241,14 +241,14 @@ export function JournalEntryForm({ accounts, onClose, onSubmit }: JournalEntryFo
             </div>
           </div>
 
-          <div className="flex items-center justify-between py-3 px-4 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+          <div className="flex items-center justify-between py-3 px-4 rounded-lg bg-erp-slate-50 dark:bg-erp-slate-700/50">
             <div>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Total: </span>
-              <span className="font-mono text-gray-900 dark:text-gray-100">
+              <span className="text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300">Total: </span>
+              <span className="font-mono text-erp-slate-900 dark:text-erp-slate-100">
                 {totalDebit.toLocaleString(undefined, { minimumFractionDigits: 2 })} / {totalCredit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
               </span>
             </div>
-            <span className={`text-sm font-medium ${isBalanced ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+            <span className={`text-sm font-medium ${isBalanced ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
               {isBalanced ? '✅ Balanced' : `❌ Unbalanced (diff: ${diff})`}
             </span>
           </div>
@@ -257,14 +257,14 @@ export function JournalEntryForm({ accounts, onClose, onSubmit }: JournalEntryFo
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300"
+              className="erp-btn-secondary flex-1"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={!canSubmit || loading}
-              className="flex-1 py-2 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium"
+              className="erp-btn-primary flex-1 disabled:opacity-50"
             >
               {loading ? 'Saving...' : 'Save Entry'}
             </button>

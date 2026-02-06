@@ -3,11 +3,11 @@ import { ChevronRight, ChevronDown, Edit, Trash } from 'lucide-react';
 import type { Account } from '../../types';
 
 const TYPE_COLORS: Record<string, string> = {
-  ASSET: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+  ASSET: 'bg-erp-primary-100 text-erp-primary-800 dark:bg-erp-primary-900/30 dark:text-erp-primary-400',
   LIABILITY: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
   EQUITY: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
-  REVENUE: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-  EXPENSE: 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400',
+  REVENUE: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400',
+  EXPENSE: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400',
 };
 
 interface AccountTreeItemProps {
@@ -20,33 +20,33 @@ interface AccountTreeItemProps {
 export function AccountTreeItem({ account, depth = 0, onEdit, onDelete }: AccountTreeItemProps) {
   const [expanded, setExpanded] = useState(true);
   const hasChildren = account.children && account.children.length > 0;
-  const typeColor = TYPE_COLORS[account.type] ?? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+  const typeColor = TYPE_COLORS[account.type] ?? 'bg-erp-slate-100 text-erp-slate-800 dark:bg-erp-slate-700 dark:text-erp-slate-300';
 
   return (
     <div className="select-none">
       <div
-        className="flex items-center gap-2 py-2 px-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 group"
+        className="flex items-center gap-2 py-2 px-2 rounded-lg hover:bg-erp-slate-100 dark:hover:bg-erp-slate-700/50 group transition-colors"
         style={{ paddingLeft: `${depth * 20 + 8}px` }}
       >
         <button
           type="button"
           onClick={() => hasChildren && setExpanded((e) => !e)}
-          className="p-0.5 rounded hover:bg-gray-200 dark:hover:bg-gray-600"
+          className="p-0.5 rounded hover:bg-erp-slate-200 dark:hover:bg-erp-slate-600"
         >
           {hasChildren ? (
             expanded ? (
-              <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+              <ChevronDown className="w-4 h-4 text-erp-slate-500 dark:text-erp-slate-400" />
             ) : (
-              <ChevronRight className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+              <ChevronRight className="w-4 h-4 text-erp-slate-500 dark:text-erp-slate-400" />
             )
           ) : (
             <span className="w-4 h-4 inline-block" />
           )}
         </button>
-        <span className="flex-1 min-w-0 font-mono text-sm text-gray-700 dark:text-gray-300">
+        <span className="flex-1 min-w-0 font-mono text-sm text-erp-slate-700 dark:text-erp-slate-300">
           {account.code}
         </span>
-        <span className="flex-1 truncate text-gray-900 dark:text-gray-100">
+        <span className="flex-1 truncate text-erp-slate-900 dark:text-erp-slate-100">
           {account.name}
         </span>
         <span
@@ -58,7 +58,7 @@ export function AccountTreeItem({ account, depth = 0, onEdit, onDelete }: Accoun
           <button
             type="button"
             onClick={() => onEdit(account)}
-            className="p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-400"
+            className="p-1.5 rounded hover:bg-erp-slate-200 dark:hover:bg-erp-slate-600 text-erp-slate-600 dark:text-erp-slate-400"
             title="Edit"
           >
             <Edit className="w-4 h-4" />

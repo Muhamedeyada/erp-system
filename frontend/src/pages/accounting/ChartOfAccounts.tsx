@@ -68,16 +68,16 @@ export function ChartOfAccounts() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Chart of Accounts</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-erp-slate-900 dark:text-erp-slate-100 tracking-tight">Chart of Accounts</h1>
         <button
           type="button"
           onClick={() => {
             setFormOpen(true);
             setEditingAccount(null);
           }}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium"
+          className="erp-btn-primary shrink-0"
         >
           <Plus className="w-4 h-4" />
           Add Account
@@ -85,12 +85,12 @@ export function ChartOfAccounts() {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4">
-        <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+        <label className="flex items-center gap-2 text-sm text-erp-slate-700 dark:text-erp-slate-300">
           Filter by type:
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+            className="erp-input py-2 max-w-[180px] sm:max-w-none"
           >
             <option value="">All Types</option>
             {ACCOUNT_TYPES.filter(Boolean).map((t) => (
@@ -100,15 +100,15 @@ export function ChartOfAccounts() {
         </label>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="erp-card overflow-hidden">
         {isLoading ? (
-          <div className="p-12 text-center text-gray-500 dark:text-gray-400">Loading...</div>
+          <div className="p-12 text-center text-erp-slate-500 dark:text-erp-slate-400">Loading...</div>
         ) : Array.isArray(accounts) && accounts.length === 0 ? (
-          <div className="p-12 text-center text-gray-500 dark:text-gray-400">
+          <div className="p-12 text-center text-erp-slate-500 dark:text-erp-slate-400">
             No accounts found. Add your first account to get started.
           </div>
         ) : (
-          <div className="divide-y divide-gray-200 dark:divide-gray-700">
+          <div className="divide-y divide-erp-slate-200 dark:divide-erp-slate-700">
             {Array.isArray(accounts) &&
               accounts.map((account) => (
                 <AccountTreeItem
@@ -136,17 +136,17 @@ export function ChartOfAccounts() {
 
       {deletingAccount && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
           onClick={() => setDeletingAccount(null)}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-sm p-6"
+            className="erp-card w-full max-w-sm p-6 shadow-erp-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+            <h3 className="text-lg font-semibold text-erp-slate-900 dark:text-erp-slate-100 mb-2">
               Delete Account?
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-erp-slate-600 dark:text-erp-slate-400 mb-4 text-sm">
               Are you sure you want to delete <strong>{deletingAccount.code} - {deletingAccount.name}</strong>?
               This cannot be undone if the account has no children or journal entries.
             </p>
@@ -154,7 +154,7 @@ export function ChartOfAccounts() {
               <button
                 type="button"
                 onClick={() => setDeletingAccount(null)}
-                className="flex-1 py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300"
+                className="erp-btn-secondary flex-1"
               >
                 Cancel
               </button>
@@ -162,7 +162,7 @@ export function ChartOfAccounts() {
                 type="button"
                 onClick={handleDeleteConfirm}
                 disabled={deleteMutation.isPending}
-                className="flex-1 py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white"
+                className="flex-1 py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-medium transition-colors"
               >
                 {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
               </button>

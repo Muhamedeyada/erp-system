@@ -102,15 +102,15 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md"
+        className="erp-card w-full max-w-md shadow-erp-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Add Payment</h2>
+        <div className="p-4 sm:p-6 border-b border-erp-slate-200 dark:border-erp-slate-700">
+          <h2 className="text-lg font-semibold text-erp-slate-900 dark:text-erp-slate-100">Add Payment</h2>
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
@@ -121,7 +121,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
 
           {!isFromDetails && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">
                 Invoice *
               </label>
               <select
@@ -129,7 +129,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
                 onChange={(e) => setInvoiceId(e.target.value)}
                 required
                 disabled={loadingInvoices}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                className="w-full px-4 py-2 erp-input"
               >
                 <option value="">Select invoice</option>
                 {invoices.map((inv) => {
@@ -142,7 +142,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
                 })}
               </select>
               {selectedInvoice && (
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                <p className="mt-1 text-xs text-erp-slate-500 dark:text-erp-slate-400">
                   Outstanding: {outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                 </p>
               )}
@@ -150,15 +150,15 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
           )}
 
           {isFromDetails && (
-            <div className="p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 text-sm">
-              <span className="text-gray-600 dark:text-gray-400">Invoice #{propInvoice?.invoiceNumber}</span>
+            <div className="p-3 rounded-lg bg-erp-slate-50 dark:bg-erp-slate-700/50 text-sm">
+              <span className="text-erp-slate-600 dark:text-erp-slate-400">Invoice #{propInvoice?.invoiceNumber}</span>
               <span className="mx-2">·</span>
               <span className="font-mono">Outstanding: {outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">
               Amount * (max: {outstanding.toLocaleString(undefined, { minimumFractionDigits: 2 })})
             </label>
             <input
@@ -169,7 +169,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-2 erp-input"
             />
             {amt > outstanding && outstanding > 0 && (
               <p className="mt-1 text-xs text-red-600 dark:text-red-400">
@@ -179,7 +179,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">
               Payment Date *
             </label>
             <input
@@ -187,18 +187,18 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
               value={paymentDate}
               onChange={(e) => setPaymentDate(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-2 erp-input"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">
               Method *
             </label>
             <select
               value={method}
               onChange={(e) => setMethod(e.target.value as (typeof METHODS)[number])}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-2 erp-input"
             >
               {METHODS.map((m) => (
                 <option key={m} value={m}>
@@ -209,7 +209,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-erp-slate-700 dark:text-erp-slate-300 mb-1">
               Reference / Notes
             </label>
             <input
@@ -217,7 +217,7 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
               value={reference}
               onChange={(e) => setReference(e.target.value)}
               placeholder="Optional"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-2 erp-input"
             />
           </div>
 
@@ -225,14 +225,14 @@ export function PaymentForm({ invoice: propInvoice, outstanding: propOutstanding
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300"
+              className="erp-btn-secondary flex-1"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={!canSubmit || loading}
-              className="flex-1 py-2 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium"
+              className="erp-btn-primary flex-1 disabled:opacity-50"
             >
               {loading ? 'Saving...' : 'Save Payment'}
             </button>
