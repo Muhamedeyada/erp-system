@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Receipt, Filter, ChevronLeft, ChevronRight, Calendar, Eye } from 'lucide-react';
 import { invoicesApi } from '../../services/api';
+import { useQueryClient } from '@tanstack/react-query';
 import { InvoiceForm } from '../../components/accounting/InvoiceForm';
 import { InvoiceDetails } from '../../components/accounting/InvoiceDetails';
 import { EmptyState } from '../../components/EmptyState';
@@ -37,6 +38,7 @@ function StatusBadge({ status }: { status: InvoiceStatus }) {
 const LIMIT = 10;
 
 export function Invoices() {
+  const queryClient = useQueryClient();
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -87,6 +89,9 @@ export function Invoices() {
     lines: Array<{ description: string; quantity: number; unitPrice: number }>;
   }) => {
     await invoicesApi.create(payload);
+    queryClient.invalidateQueries({ queryKey: ['invoices'] });
+    queryClient.invalidateQueries({ queryKey: ['trial-balance'] });
+    queryClient.invalidateQueries({ queryKey: ['journal-entries'] });
     loadInvoices();
   };
 

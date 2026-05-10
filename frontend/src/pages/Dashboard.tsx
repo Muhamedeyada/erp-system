@@ -64,8 +64,8 @@ export function Dashboard() {
   });
 
   const now = new Date();
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10);
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().slice(0, 10);
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toLocaleDateString('en-CA'); // YYYY-MM-DD
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).toLocaleDateString('en-CA');
 
   const { data: trialBalance } = useQuery({
     queryKey: ['trial-balance', startOfMonth, endOfMonth],
@@ -91,8 +91,9 @@ export function Dashboard() {
     let expenses = 0;
     for (const acc of accountsList) {
       const bal = Number(acc.balance) || 0;
-      if (acc.accountType === 'REVENUE') revenue += Math.abs(bal);
-      if (acc.accountType === 'EXPENSE') expenses += Math.abs(bal);
+      const type = String(acc.accountType).toUpperCase();
+      if (type === 'REVENUE') revenue += Math.abs(bal);
+      if (type === 'EXPENSE') expenses += Math.abs(bal);
     }
     return [
       { name: 'Revenue', value: revenue, fill: '#0284c7' },

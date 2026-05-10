@@ -21,9 +21,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     const resp = exceptionResponse as { message?: string | string[]; errors?: string[] };
     let message: string | string[] = resp?.message ?? exception.message;
-    const errors = resp?.errors ?? (Array.isArray(message) ? message : undefined);
+    const errors = resp?.errors ?? (Array.isArray(message) ? (message as string[]) : undefined);
     const messageStr =
-      errors?.length > 0
+      errors && errors.length > 0
         ? errors.join('. ')
         : Array.isArray(message)
           ? (message as string[]).join('. ')

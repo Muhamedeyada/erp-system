@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Eye, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { journalEntriesApi, accountsApi } from '../../services/api';
+import { useQueryClient } from '@tanstack/react-query';
 import { JournalEntryForm } from '../../components/accounting/JournalEntryForm';
 import { EmptyState } from '../../components/EmptyState';
 import { TableSkeleton } from '../../components/Skeleton';
@@ -9,6 +10,7 @@ import type { JournalEntry, Account } from '../../types';
 const LIMIT = 10;
 
 export function JournalEntries() {
+  const queryClient = useQueryClient();
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [loading, setLoading] = useState(true);
@@ -59,6 +61,9 @@ export function JournalEntries() {
     lines: Array<{ accountId: string; debit?: number; credit?: number; description?: string }>;
   }) => {
     await journalEntriesApi.create(payload);
+    queryClient.invalidateQueries({ queryKey: ['journal-entries'] });
+    queryClient.invalidateQueries({ queryKey: ['trial-balance'] });
+    queryClient.invalidateQueries({ queryKey: ['invoices'] });
     loadEntries();
   };
 

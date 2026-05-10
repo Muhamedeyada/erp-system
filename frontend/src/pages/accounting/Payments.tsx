@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, CreditCard } from 'lucide-react';
 import { paymentsApi, invoicesApi } from '../../services/api';
+import { useQueryClient } from '@tanstack/react-query';
 import { PaymentForm } from '../../components/accounting/PaymentForm';
 import { EmptyState } from '../../components/EmptyState';
 import { TableSkeleton } from '../../components/Skeleton';
@@ -15,6 +16,7 @@ const METHOD_OPTIONS: { value: '' | PaymentMethod; label: string }[] = [
 ];
 
 export function Payments() {
+  const queryClient = useQueryClient();
   const [payments, setPayments] = useState<Payment[]>([]);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,6 +60,9 @@ export function Payments() {
   }, []);
 
   const handlePaymentSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ['invoices'] });
+    queryClient.invalidateQueries({ queryKey: ['trial-balance'] });
+    queryClient.invalidateQueries({ queryKey: ['journal-entries'] });
     loadPayments();
   };
 

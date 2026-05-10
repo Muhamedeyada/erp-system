@@ -83,8 +83,16 @@ export class ReportsService {
     endDate?: string,
   ): Promise<TrialBalanceResult> {
     const dateFilter: { gte?: Date; lte?: Date } = {};
-    if (startDate) dateFilter.gte = new Date(startDate);
-    if (endDate) dateFilter.lte = new Date(endDate);
+    if (startDate) {
+      const s = new Date(startDate);
+      s.setUTCHours(0, 0, 0, 0);
+      dateFilter.gte = s;
+    }
+    if (endDate) {
+      const e = new Date(endDate);
+      e.setUTCHours(23, 59, 59, 999);
+      dateFilter.lte = e;
+    }
 
     const lines = await this.prisma.journalEntryLine.findMany({
       where: {
